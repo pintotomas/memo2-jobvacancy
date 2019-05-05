@@ -20,6 +20,19 @@ describe JobApplication do
     end
   end
 
+  describe 'valid?' do
+    it 'should be valid when email is aMail@gmail.com' do
+      email = 'aMail@gmail.com'
+      ja = described_class.create_for(email, JobOffer.new)
+      expect(ja).to be_valid
+    end
+
+    it 'should not be valid when empty is empty' do
+      ja = described_class.create_for('', JobOffer.new)
+      expect(ja).not_to be_valid
+    end
+  end
+
   describe 'process' do
     it 'should deliver contact info notification' do
       ja = described_class.create_for('applicant@test.com', JobOffer.new)
