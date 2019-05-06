@@ -26,3 +26,7 @@ RSpec/MessageSpies:
   EnforcedStyle: receive
 RSpec/MultipleExpectations:
   Max: 3
+RSpec/ExampleLength:
+  Max: 6
+RSpec/LetSetup:
+  Enabled: false
