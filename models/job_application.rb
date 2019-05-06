@@ -1,12 +1,11 @@
 class JobApplication
-  attr_accessor :applicant_email
-  attr_accessor :job_offer
+  attr_accessor :applicant_email, :id, :job_offer_id
+  include ActiveModel::Validations
 
-  def self.create_for(email, offer)
-    app = JobApplication.new
-    app.applicant_email = email
-    app.job_offer = offer
-    app
+  def initialize(data)
+    @id = data[:id]
+    @job_offer_id = data[:job_offer_id]
+    @applicant_email = data[:email]
   end
 
   def process
