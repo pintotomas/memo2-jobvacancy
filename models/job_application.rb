@@ -7,7 +7,7 @@ class JobApplication
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z]+)*\.[a-z]+\z/i
 
   validates :applicant_email, presence: true, format: { with: VALID_EMAIL_REGEX,
-                                                        message: ': invalid email' }
+                                                        message: ': invalid format' }
 
   def initialize(data = {})
     @applicant_email = data[:applicant_email]

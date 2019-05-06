@@ -5,7 +5,7 @@
 <% form_for(@job_application, "/job_offers/apply/#{@job_offer.id}") do |f| %>
 
   <%= f.label :applicant_email %>
- 	<%= f.text_field :applicant_email, :required => 'required' %>
+ 	<%= f.email_field :applicant_email, :required => 'required' %>
 
 	<hr/>
   <%= f.submit "Apply", :class => "btn btn-primary" %>
