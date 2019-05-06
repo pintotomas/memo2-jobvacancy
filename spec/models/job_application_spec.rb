@@ -27,8 +27,14 @@ describe JobApplication do
       expect(ja).to be_valid
     end
 
-    it 'should not be valid when empty is empty' do
+    it 'should not be valid when the email is empty' do
       ja = described_class.create_for('', JobOffer.new)
+      expect(ja).not_to be_valid
+    end
+
+    it 'should not be valid when the email has a invalid format' do
+      email =  'aBadMailArrobaGmail.com'
+      ja = described_class.create_for(email, JobOffer.new)
       expect(ja).not_to be_valid
     end
   end
