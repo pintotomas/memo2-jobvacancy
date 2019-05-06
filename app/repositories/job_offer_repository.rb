@@ -10,6 +10,10 @@ class JobOfferRepository < BaseRepository
     load_collection dataset.where(user_id: user.id)
   end
 
+  def find_by_id(id)
+    load_collection dataset.where(id: id)
+  end
+
   def deactivate_old_offers
     all_active.each do |offer|
       if offer.old_offer?
