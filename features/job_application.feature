@@ -5,7 +5,7 @@ Feature: Job Application
 
   Background:
   	Given only a "Web Programmer" offer exists in the offers list
-@wip
+
   Scenario: Apply to job offer
     Given I access the offers list page
     When I apply
