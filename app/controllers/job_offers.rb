@@ -1,6 +1,7 @@
 JobVacancy::App.controllers :job_offers do
   get :my do
     @offers = JobOfferRepository.new.find_by_owner(current_user)
+    @job_applications = JobApplicationRepository.new
     render 'job_offers/my_offers'
   end
 
@@ -41,9 +42,14 @@ JobVacancy::App.controllers :job_offers do
     @job_offer = JobOfferRepository.new.find(params[:offer_id])
     applicant_email = params[:job_application][:applicant_email]
     @job_application = JobApplication.new(email: applicant_email, job_offer_id: @job_offer.id)
-    @job_application.process(@job_offer)
-    flash[:success] = 'Contact information sent.'
-    redirect '/job_offers'
+    if JobApplicationRepository.new.save(@job_application)
+      @job_application.process(@job_offer)
+      flash[:success] = 'Contact information sent.'
+      redirect '/job_offers'
+    else
+      flash.now[:error] = 'Error saving postulation'
+      render 'job_offers/apply'
+    end
   end
 
   post :create do
