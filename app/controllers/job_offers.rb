@@ -47,7 +47,7 @@ JobVacancy::App.controllers :job_offers do
       redirect '/job_offers'
     else
       @job_offer = JobOfferRepository.new.find(params[:offer_id])
-        flash.now[:error] = @job_application.errors.full_messages[0]
+      flash.now[:error] = @job_application.errors.full_messages[0]
       render 'job_offers/apply'
     end
   end
