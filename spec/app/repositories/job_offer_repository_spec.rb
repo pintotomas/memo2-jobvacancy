@@ -9,6 +9,24 @@ describe JobOfferRepository do
     user
   end
 
+  describe 'find by id' do
+    let!(:today_offer) do
+      today_offer = JobOffer.new(title: 'a title',
+                                 updated_on: Date.today,
+                                 is_active: true,
+                                 user_id: owner.id)
+      repository.save(today_offer)
+      today_offer
+    end
+
+    it 'should find correct offer' do
+      offer = repository.find_by_id(today_offer.id)[0]
+      expect(offer.title).to eq today_offer.title
+      expect(offer.user_id).to eq today_offer.user_id
+      expect(offer.updated_on).to eq today_offer.updated_on
+    end
+  end
+
   describe 'deactive_old_offers' do
     let!(:today_offer) do
       today_offer = JobOffer.new(title: 'a title',
