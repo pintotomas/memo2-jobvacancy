@@ -48,7 +48,8 @@ JobVacancy::App.controllers :job_offers do
       flash[:success] = 'Contact information sent.'
       redirect '/job_offers'
     else
-      flash.now[:error] = 'Error saving postulation'
+      @job_offer = JobOfferRepository.new.find(params[:offer_id])
+      flash.now[:error] = @job_application.errors.full_messages[0]
       render 'job_offers/apply'
     end
   end
