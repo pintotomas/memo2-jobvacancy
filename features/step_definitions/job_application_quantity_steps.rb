@@ -44,3 +44,11 @@ Then('only one postulant could have applied to {string} offer') do |offer_title|
   applications = JobApplicationRepository.new.find_by_offer(offers[0])
   expect(applications.length).to eq 1
 end
+
+Given('I am seeing the job offers i created') do
+  visit '/job_offers/my'
+end
+
+Then('I can know how many applicants my offer has') do
+  page.should have_content('Postulations')
+end
