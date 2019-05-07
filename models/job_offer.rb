@@ -1,6 +1,5 @@
 class JobOffer
   include ActiveModel::Validations
-
   attr_accessor :id, :user, :user_id, :title,
                 :location, :description, :is_active,
                 :updated_on, :created_on, :validity_date
@@ -8,6 +7,7 @@ class JobOffer
   validates :title, presence: true
 
   def initialize(data = {})
+    validate_date(data[:validity_date])
     @id = data[:id]
     @title = data[:title]
     @location = data[:location]
@@ -38,4 +38,8 @@ class JobOffer
   def old_offer?
     (Date.today - updated_on) >= 30
   end
+
+  protected
+
+  def validate_date(date); end
 end
