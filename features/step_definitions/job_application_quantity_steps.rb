@@ -26,3 +26,21 @@ Then('no one could have applied to {string} offer') do |offer_title|
   applications = JobApplicationRepository.new.find_by_offer(offers[0])
   expect(applications.length).to eq 0
 end
+
+Given('I have activated {string} job offer') do |offer_title|
+  offer = JobOfferRepository.new.find_by_title(offer_title)[0]
+  offer.is_active = true
+  JobOfferRepository.new.save offer
+end
+
+When('only one person has applied to {string} job offer') do |offer_title|
+  offer = JobOfferRepository.new.find_by_title(offer_title)[0]
+  job_application = JobApplication.new(job_offer_id: offer.id, applicant_email: 'asd@test.com')
+  JobApplicationRepository.new.save(job_application)
+end
+
+Then('only one postulant could have applied to {string} offer') do |offer_title|
+  offers = JobOfferRepository.new.find_by_title(offer_title)
+  applications = JobApplicationRepository.new.find_by_offer(offers[0])
+  expect(applications.length).to eq 1
+end
