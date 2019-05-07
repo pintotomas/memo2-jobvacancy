@@ -37,5 +37,9 @@ describe JobOffer do
       job_offer = described_class.new(title: 'a title', validity_date: '28/04/2019 04:05:06 PM')
       expect(job_offer).to be_valid
     end
+    it 'should be invalid when validity date is in the incorrect format' do
+      job_offer = described_class.new(title: 'a title', validity_date: '28-04-2019 04:05:06 PM')
+      expect(job_offer).to be_valid
+    end
   end
 end
