@@ -1,4 +1,4 @@
- Feature: Job Application count
+ Feature: Job Application short bio
   Background:
     Given ‘python dev’ job offer is created
 @wip
