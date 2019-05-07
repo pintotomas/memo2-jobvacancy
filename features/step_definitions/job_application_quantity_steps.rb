@@ -21,10 +21,9 @@ When('I see my offers') do
   visit '/job_offers/my'
 end
 
-Then('no one could have applied to {string} offer') do |offer_title|
-  offers = JobOfferRepository.new.find_by_title(offer_title)
-  applications = JobApplicationRepository.new.find_by_offer(offers[0])
-  expect(applications.length).to eq 0
+Then('no one could have applied to {string} offer') do |_offer_title|
+  visit '/job_offers/my'
+  page.should have_content('0')
 end
 
 Given('I have activated {string} job offer') do |offer_title|
