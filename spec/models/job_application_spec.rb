@@ -1,49 +1,52 @@
 require 'spec_helper'
 
 describe JobApplication do
+  subject(:job_application) { described_class.new({}) }
+
   describe 'model' do
     it { is_expected.to respond_to(:applicant_email) }
-    it { is_expected.to respond_to(:job_offer) }
+    it { is_expected.to respond_to(:job_offer_id) }
   end
 
-  describe 'create_for' do
+  describe 'initialize' do
     it 'should set applicant_email' do
       email = 'applicant@test.com'
-      ja = described_class.create_for(email, JobOffer.new)
+      ja = described_class.new(email: email, job_offer_id: 0)
       expect(ja.applicant_email).to eq(email)
     end
 
     it 'should set job_offer' do
-      offer = JobOffer.new
-      ja = described_class.create_for('applicant@test.com', offer)
-      expect(ja.job_offer).to eq(offer)
+      offer = JobOffer.new(id: 1667)
+      ja = described_class.new(email: 'applicant@test.com', job_offer_id: offer.id)
+      expect(ja.job_offer_id).to eq(offer.id)
     end
   end
 
   describe 'valid?' do
     it 'should be valid when email is aMail@gmail.com' do
       email = 'aMail@gmail.com'
-      ja = described_class.create_for(email, JobOffer.new)
+      ja = described_class.new(email: email, job_offer_id: JobOffer.new.id)
       expect(ja).to be_valid
     end
 
     it 'should not be valid when the email is empty' do
-      ja = described_class.create_for('', JobOffer.new)
+      ja = described_class.new(email: '', job_offer_id: JobOffer.new.id)
       expect(ja).not_to be_valid
     end
 
     it 'should not be valid when the email has a invalid format' do
       email =  'aBadMailArrobaGmail.com'
-      ja = described_class.create_for(email, JobOffer.new)
+      ja = described_class.new(email: email, job_offer_id: JobOffer.new.id)
       expect(ja).not_to be_valid
     end
   end
 
   describe 'process' do
     it 'should deliver contact info notification' do
-      ja = described_class.create_for('applicant@test.com', JobOffer.new)
+      offer = JobOffer.new(id: 123)
+      ja = described_class.new(email: 'applicant@test.com', job_offer_id: offer.id)
       expect(JobVacancy::App).to receive(:deliver).with(:notification, :contact_info_email, ja)
-      ja.process
+      ja.process(offer)
     end
   end
 end
