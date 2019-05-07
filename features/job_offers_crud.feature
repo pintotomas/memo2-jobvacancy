@@ -26,9 +26,3 @@ Feature: Job Offers CRUD
     Given I delete it
     Then I should see "Offer deleted"
     And I should not see "Programmer vacancy!!!" in My Offers
-@wip
-  Scenario: Applicants quantity after creation
-
-    Given I have never activated ‘python dev’ job offer 
-    When I see my offers
-    Then no one could have applied to ‘python dev’ offer

@@ -56,15 +56,3 @@ end
 Given(/^I save the modification$/) do
   click_button('Save')
 end
-
-Given('I have never activated ‘python dev’ job offer') do
-  pending # Write code here that turns the phrase above into concrete actions
-end
-
-When('I see my offers') do
-  pending # Write code here that turns the phrase above into concrete actions
-end
-
-Then('no one could have applied to ‘python dev’ offer') do
-  pending # Write code here that turns the phrase above into concrete actions
-end
