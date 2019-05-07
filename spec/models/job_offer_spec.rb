@@ -27,5 +27,11 @@ describe JobOffer do
       job_offer = described_class.new(title: 'a title')
       expect(job_offer).to be_valid
     end
+    it 'should be valid when validity date is/isnt blank' do
+      job_offer1 = described_class.new(title: 'a title')
+      job_offer2 = described_class.new(title: 'a title', validity_date: '28/04/2019')
+      expect(job_offer2).to be_valid
+      expect(job_offer1).to be_valid
+    end
   end
 end
