@@ -13,7 +13,11 @@ Given('I am applying to {string} offer') do |_email|
   click_link 'Apply'
 end
 
-When('I set my email to {string}') do |email|
+Given('I entered a short bio') do
+  fill_in('job_application[bio]', with: 'bio')
+end
+
+Given('I set my email to {string}') do |email|
   @applicant_email = email
   fill_in('job_application[applicant_email]', with: email)
 end
