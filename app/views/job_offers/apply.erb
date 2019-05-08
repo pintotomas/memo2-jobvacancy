@@ -5,8 +5,9 @@
 <% form_for(@job_application, "/job_offers/apply/#{@job_offer.id}") do |f| %>
 
   <%= f.label :applicant_email %>
- 	<%= f.email_field :applicant_email, :required => 'required' %>
-
+  <%= f.email_field :applicant_email, :required => 'required' %>
+  <%= f.label :bio, :caption => "Short Bio (max 500 characters):" %>
+  <%= f.text_area :bio, :required => 'required' %>
 	<hr/>
   <%= f.submit "Apply", :class => "btn btn-primary" %>
   <%= link_to 'Cancel', url_for(:job_offers, :latest), :class => "btn btn-secondary" %>

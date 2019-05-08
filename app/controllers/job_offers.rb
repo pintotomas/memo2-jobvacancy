@@ -41,7 +41,9 @@ JobVacancy::App.controllers :job_offers do
   post :apply, with: :offer_id do
     @job_offer = JobOfferRepository.new.find(params[:offer_id])
     applicant_email = params[:job_application][:applicant_email]
-    @job_application = JobApplication.new(email: applicant_email, job_offer_id: @job_offer.id)
+    bio = params[:job_application][:bio]
+    @job_application = JobApplication.new(email: applicant_email,
+                                          job_offer_id: @job_offer.id, bio: bio)
     if @job_application.valid?
       JobApplicationRepository.new.save(@job_application)
       @job_application.process(@job_offer)
