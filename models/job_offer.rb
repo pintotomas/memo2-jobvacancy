@@ -42,9 +42,10 @@ class JobOffer
   protected
 
   def validate_date(date)
+    @not_valid = false
     return if date.nil?
 
-    @validity_date = DateTime.strptime(date, '%d-%m-%Y %I:%M:%S %p')
+    @validity_date = DateTime.strptime(date, '%d-%m-%Y %I:%M %p')
   rescue ArgumentError
     @not_valid = true
   end

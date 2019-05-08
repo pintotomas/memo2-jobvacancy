@@ -29,16 +29,16 @@ describe JobOffer do
     end
     it 'should be valid when validity date is/isnt blank' do
       job_offer1 = described_class.new(title: 'a title')
-      job_offer2 = described_class.new(title: 'a title', validity_date: '28/04/2019 04:05:06 PM')
+      job_offer2 = described_class.new(title: 'a title', validity_date: '28/04/2019 04:05 PM')
       expect(job_offer2).to be_valid
       expect(job_offer1).to be_valid
     end
     it 'should be valid when validity date is in the correct format' do
-      job_offer = described_class.new(title: 'a title', validity_date: '28/04/2019 04:05:06 PM')
+      job_offer = described_class.new(title: 'a title', validity_date: '28/04/2019 04:05 PM')
       expect(job_offer).to be_valid
     end
     it 'should be invalid when validity date is in the incorrect format' do
-      job_offer = described_class.new(title: 'a title', validity_date: '28-04-2019 04:05:06 PM')
+      job_offer = described_class.new(title: 'a title', validity_date: '28-04-2019 04:05 PM')
       expect(job_offer).to be_valid
     end
   end
