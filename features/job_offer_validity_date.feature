@@ -31,3 +31,9 @@ Feature: Job Validity Date
     Given "Pascal developer" offer expired yesterday
     When I visit my offers
     Then I should see  "Expired"
+@wip
+  Scenario: Applying to an expired offer
+    Given "Pascal developer" offer expired yesterday
+    When I was already on the apply page
+    And I apply
+    Then I should see  "Offer expired while you were applying"
