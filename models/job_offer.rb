@@ -6,7 +6,7 @@ class JobOffer
                 :validity_time
 
   validates :title, presence: true
-  validate :validate_date
+  validate :validate_date, :validate_time
 
   def initialize(data = {})
     @id = data[:id]
@@ -53,8 +53,19 @@ class JobOffer
     @not_valid = false
     return if @validity_date.nil?
 
-    DateTime.strptime(@validity_date + ' ' + @validity_time, '%Y-%m-%d %H:%M')
+    DateTime.strptime(@validity_date, '%Y-%m-%d')
   rescue ArgumentError
     @not_valid = true
+    errors.add(:validity_date, 'invalid format')
+  end
+
+  def validate_time
+    @not_valid = false
+    return if @validate_time.nil?
+
+    DateTime.strptime(validate_time, '%H:%M')
+  rescue ArgumentError
+    @not_valid = true
+    errors.add(:validate_time, 'invalid format')
   end
 end
