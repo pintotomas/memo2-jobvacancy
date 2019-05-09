@@ -26,9 +26,10 @@ Feature: Job Validity Date
     And confirm the new offer
     And I should not see "Pascal developer" in My Offers
 
-  @wip
-  Scenario: Search a expired offer
-    Given “Pascal developer” offer expires in “28/04/2019”
+  Scenario: Search an expired offer
+    Given "Pascal developer" offer expired yesterday
+    When I search "Pascal developer" offer today in the list of offers
+    Then "Pascal developer" should not be listed
 
 
 
