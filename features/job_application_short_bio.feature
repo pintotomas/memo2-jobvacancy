@@ -21,7 +21,7 @@
     And I fill the short bio with "short bio"
     When I confirm my application
     Then I should apply successfully.
-@wip
+
   Scenario: Short bio is longer than 500 characters    
     Given I access the offers list page
     And I am applying to "java programmer" offer 
