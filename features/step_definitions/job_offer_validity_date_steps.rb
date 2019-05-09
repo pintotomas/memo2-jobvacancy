@@ -8,11 +8,14 @@ Given('{string} offer expired yesterday') do |offer_title|
   fill_in('job_offer[validity_time]', with: hour)
   click_button('Create')
   visit '/job_offers/my'
-  click_button('Activate')
 end
 
 When('I search {string} offer today in the list of offers') do |_string|
   visit '/job_offers/latest'
+end
+
+When('I visit my offers') do
+  visit '/job_offers/my'
 end
 
 Then('{string} should not be listed') do |title|
@@ -34,4 +37,8 @@ end
 
 Then('{string} should be in the list of offers') do |title|
   page.should have_content(title)
+end
+
+Then('I should see  {string}') do |string|
+  page.should have_content(string)
 end
