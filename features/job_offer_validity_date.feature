@@ -12,4 +12,8 @@ Feature: Job Validity Date
     And set description to "another description"
     And confirm the new offer
     Then the offer is created successfully
-
+  @wip
+  Scenario: Search a expired offer
+    Given “Pascal developer” offer expires in “28/04/2019”
+    When I search "Pascal developer" offer in My Offers in “29/04/2019”
+    Then  "Pascal developer" should not be in My Offers
