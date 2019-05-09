@@ -30,10 +30,10 @@ Feature: Job Validity Date
     Given "Pascal developer" offer expired yesterday
     When I search "Pascal developer" offer today in the list of offers
     Then "Pascal developer" should not be listed
-@wip
+
   Scenario: Search a a non expired offer 
     Given "Pascal developer" offer expires tomorrow
-    When I search "Pascal developer" today
+    When I search "Pascal developer" offer today in the list of offers
     Then "Pascal developer" should be in the list of offers
 
  
