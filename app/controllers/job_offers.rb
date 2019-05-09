@@ -15,6 +15,7 @@ JobVacancy::App.controllers :job_offers do
   end
 
   get :latest do
+    JobOfferRepository.new.deactivate_old_offers
     @offers = JobOfferRepository.new.all_active
     render 'job_offers/list'
   end
