@@ -62,9 +62,14 @@ When('I set the title to {string}') do |offer_title|
 end
 
 When('set the validity date to {string}') do |datetime|
-  my_date_time = DateTime.strptime(datetime, '%d/%m/%Y %I:%M %p')
-  date =  my_date_time.strftime('%Y-%m-%d')
-  hour =  my_date_time.strftime('%H:%M')
+  begin
+    my_date_time = DateTime.strptime(datetime, '%d/%m/%Y %I:%M %p')
+    date =  my_date_time.strftime('%Y-%m-%d')
+    hour =  my_date_time.strftime('%H:%M')
+  rescue ArgumentError
+    date = '-1'
+    hour = '-1'
+  end
   fill_in('job_offer[validity_date]', with: date)
   fill_in('job_offer[validity_time]', with: hour)
 end

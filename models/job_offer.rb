@@ -54,6 +54,7 @@ class JobOffer
     DateTime.strptime(@validity_date, '%Y-%m-%d')
   rescue ArgumentError
     @not_valid = true
+    errors.add(:validity_date, 'invalid format')
   end
 
   def validate_time
@@ -63,5 +64,6 @@ class JobOffer
     DateTime.strptime(validate_time, '%H:%M')
   rescue ArgumentError
     @not_valid = true
+    errors.add(:validate_time, 'invalid format')
   end
 end
