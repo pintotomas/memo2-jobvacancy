@@ -35,5 +35,8 @@ Feature: Job Validity Date
     Given "Pascal developer" offer expires tomorrow
     When I search "Pascal developer" offer today in the list of offers
     Then "Pascal developer" should be in the list of offers
-
- 
+  @wip
+  Scenario: Activate an expired offer
+    Given "Pascal developer" offer expired yesterday
+    When I go to my offers and try to activate it
+    Then I should see  "Offer expired"
