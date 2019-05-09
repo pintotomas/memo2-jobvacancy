@@ -28,3 +28,7 @@ RSpec/MultipleExpectations:
   Max: 3
 RSpec/ExampleLength:
   Max: 6
+RSpec/LetSetup:
+  Enabled: false
+Lint/Debugger:
+  Enabled: false
