@@ -7,6 +7,8 @@ class JobOffer
 
   validates :title, presence: true
   validate :validate_date, :validate_time
+  SECONDS_IN_MINUTE = 60
+  SECONDS_IN_HOUR = 60 * 60
 
   def initialize(data = {})
     @id = data[:id]
@@ -44,16 +46,25 @@ class JobOffer
   def old_offer?
     return (Date.today - updated_on) >= 30 if @validity_date.nil?
 
-    false
+    expired_offer?
   end
 
   protected
 
+  def expired_offer?
+    expire_time = @validity_date.to_time + Time.parse(@validity_time).hour *
+                                           SECONDS_IN_HOUR +
+                  Time.parse(@validity_time).min * SECONDS_IN_MINUTE
+
+    expire_time < DateTime.now
+  end
+
   def validate_date
     @not_valid = false
     return if @validity_date.nil?
+    return if @validity_date.instance_of? Date # already saved before
 
-    DateTime.strptime(@validity_date, '%Y-%m-%d')
+    Date.strptime(@validity_date, '%Y-%m-%d')
   rescue ArgumentError
     @not_valid = true
     errors.add(:validity_date, 'invalid format')
