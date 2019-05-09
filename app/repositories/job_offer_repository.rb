@@ -12,7 +12,7 @@ class JobOfferRepository < BaseRepository
 
   def deactivate_old_offers
     all_active.each do |offer|
-      if offer.old_offer?
+      if offer.old_offer? || offer.expired_offer?
         offer.deactivate
         update(offer)
       end

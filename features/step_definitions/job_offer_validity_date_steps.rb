@@ -16,7 +16,6 @@ When('I search {string} offer today in the list of offers') do |_string|
 end
 
 Then('{string} should not be listed') do |title|
-  visit '/job_offers/latest'
   page.should_not have_content(title)
 end
 
@@ -34,6 +33,5 @@ Given('{string} offer expires tomorrow') do |offer_title|
 end
 
 Then('{string} should be in the list of offers') do |title|
-  visit '/job_offers/latest'
   page.should have_content(title)
 end

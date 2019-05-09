@@ -46,12 +46,12 @@ class JobOffer
   def old_offer?
     return (Date.today - updated_on) >= 30 if @validity_date.nil?
 
-    expired_offer?
+    false
   end
 
-  protected
-
   def expired_offer?
+    return false if @validity_date.nil?
+
     expire_time = @validity_date.to_time + Time.parse(@validity_time).hour *
                                            SECONDS_IN_HOUR +
                   Time.parse(@validity_time).min * SECONDS_IN_MINUTE
