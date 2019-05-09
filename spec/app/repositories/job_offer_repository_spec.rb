@@ -28,14 +28,37 @@ describe JobOfferRepository do
       thirty_day_offer
     end
 
-    it 'should deactivate offers updated 45 days ago' do
+    let!(:today_offer2) do
+      today = Date.today
+      tomorrow_day = today.next_day.day
+      tomorrow_month = today.next_day.month
+      tomorrow_year = today.next_day.year
+      day = String(tomorrow_year) + '-' + String(tomorrow_month) + '-' + String(tomorrow_day)
+      today_offer2 = JobOffer.new(title: 'a title',
+                                  updated_on: today,
+                                  is_active: true,
+                                  user_id: owner.id,
+                                  validity_date: day,
+                                  validity_time: '08:00')
+      repository.save(today_offer2)
+      today_offer2
+    end
+
+    it 'should not deactivate offers created today, expire date specified' do
+      repository.deactivate_old_offers
+
+      not_updated_offer = repository.find(today_offer2.id)
+      expect(not_updated_offer.is_active).to eq true
+    end
+
+    it 'should deactivate offers updated 45 days ago, no exp date specified' do
       repository.deactivate_old_offers
 
       updated_offer = repository.find(thirty_day_offer.id)
       expect(updated_offer.is_active).to eq false
     end
 
-    it 'should not deactivate offers created today' do
+    it 'should not deactivate offers created today, no exp date specified' do
       repository.deactivate_old_offers
 
       not_updated_offer = repository.find(today_offer.id)
