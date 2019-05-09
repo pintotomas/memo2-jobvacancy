@@ -2,21 +2,27 @@ class JobOffer
   include ActiveModel::Validations
   attr_accessor :id, :user, :user_id, :title,
                 :location, :description, :is_active,
-                :updated_on, :created_on, :validity_date
+                :updated_on, :created_on, :validity_date,
+                :validity_time
 
   validates :title, presence: true
+  validate :validate_date
 
   def initialize(data = {})
-    validate_date(data[:validity_date])
     @id = data[:id]
     @title = data[:title]
     @location = data[:location]
     @description = data[:description]
     @is_active = data[:is_active]
+    @user_id = data[:user_id]
+    initialize_dates(data)
+  end
+
+  def initialize_dates(data = {})
     @updated_on = data[:updated_on]
     @created_on = data[:created_on]
-    @user_id = data[:user_id]
-    @validity_date = data[:validity_date]
+    @validity_date = data[:validity_date] == '' ? nil : data[:validity_date]
+    @validity_time = data[:validity_time] == '' ? nil : data[:validity_time]
   end
 
   def owner
@@ -41,11 +47,11 @@ class JobOffer
 
   protected
 
-  def validate_date(date)
+  def validate_date
     @not_valid = false
-    return if date.nil?
+    return if @validity_date.nil?
 
-    @validity_date = DateTime.strptime(date, '%d-%m-%Y %I:%M %p')
+    DateTime.strptime(@validity_date + ' ' + @validity_time, '%Y-%m-%d %H:%M')
   rescue ArgumentError
     @not_valid = true
   end

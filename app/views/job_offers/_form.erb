@@ -2,6 +2,14 @@
  	<%= f.text_field :title, :class => "input-block-level" %>
   <%= f.label :location %>
   <%= f.text_field :location, :class => "input-block-level" %>
+
+  <%= f.label :validity_date %>
+  <%= f.date_field :validity_date %>
+
+
+  <%= f.label :validity_time %>
+  <%= f.time_field :validity_time%>
+
   <%= f.label :description %>
   <%= f.text_area :description, :class => "input-block-level" %>
 

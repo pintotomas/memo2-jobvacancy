@@ -14,6 +14,7 @@ describe JobOffer do
     it { is_expected.to respond_to(:updated_on) }
     it { is_expected.to respond_to(:is_active) }
     it { is_expected.to respond_to(:validity_date) }
+    it { is_expected.to respond_to(:validity_time) }
   end
 
   describe 'valid?' do
@@ -29,16 +30,19 @@ describe JobOffer do
     end
     it 'should be valid when validity date is/isnt blank' do
       job_offer1 = described_class.new(title: 'a title')
-      job_offer2 = described_class.new(title: 'a title', validity_date: '28/04/2019 04:05 PM')
+      job_offer2 = described_class.new(title: 'a title',
+                                       validity_date: '2019-05-29', validity_time: '04:06')
       expect(job_offer2).to be_valid
       expect(job_offer1).to be_valid
     end
     it 'should be valid when validity date is in the correct format' do
-      job_offer = described_class.new(title: 'a title', validity_date: '28/04/2019 04:05 PM')
+      job_offer = described_class.new(title: 'a title',
+                                      validity_date: '2019-05-29', validity_time: '04:07')
       expect(job_offer).to be_valid
     end
     it 'should be invalid when validity date is in the incorrect format' do
-      job_offer = described_class.new(title: 'a title', validity_date: '28-04-2019 04:05 PM')
+      job_offer = described_class.new(title: 'a title',
+                                      validity_date: '2019-05-29', validity_time: '04:05')
       expect(job_offer).to be_valid
     end
   end

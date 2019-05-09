@@ -37,6 +37,8 @@ class JobOfferRepository < BaseRepository
     {
       title: offer.title,
       location: offer.location,
+      validity_date: offer.validity_date,
+      validity_time:  offer.validity_time,
       description: offer.description,
       is_active: offer.is_active,
       user_id: offer.owner&.id || offer.user_id
