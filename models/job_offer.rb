@@ -72,11 +72,11 @@ class JobOffer
 
   def validate_time
     @not_valid = false
-    return if @validate_time.nil?
+    return if @validity_time.nil?
 
-    DateTime.strptime(validate_time, '%H:%M')
+    DateTime.strptime(validity_time, '%H:%M')
   rescue ArgumentError
     @not_valid = true
-    errors.add(:validate_time, 'invalid format')
+    errors.add(:validity_time, 'invalid format')
   end
 end
