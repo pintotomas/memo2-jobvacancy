@@ -20,7 +20,7 @@ class JobOfferRepository < BaseRepository
 
   def deactivate_old_offers
     all_active.each do |offer|
-      if offer.old_offer?
+      if offer.old_offer? || offer.expired_offer?
         offer.deactivate
         update(offer)
       end
@@ -45,6 +45,8 @@ class JobOfferRepository < BaseRepository
     {
       title: offer.title,
       location: offer.location,
+      validity_date: offer.validity_date,
+      validity_time:  offer.validity_time,
       description: offer.description,
       is_active: offer.is_active,
       user_id: offer.owner&.id || offer.user_id

@@ -56,3 +56,28 @@ end
 Given(/^I save the modification$/) do
   click_button('Save')
 end
+
+When('I set the title to {string}') do |offer_title|
+  fill_in('job_offer[title]', with: offer_title)
+end
+
+When('set the validity date to {string}') do |datetime|
+  begin
+    my_date_time = DateTime.strptime(datetime, '%d/%m/%Y %I:%M %p')
+    date =  my_date_time.strftime('%Y-%m-%d')
+    hour =  my_date_time.strftime('%H:%M')
+  rescue ArgumentError
+    date = '-1'
+    hour = '-1'
+  end
+  fill_in('job_offer[validity_date]', with: date)
+  fill_in('job_offer[validity_time]', with: hour)
+end
+
+When('set location to {string}') do |location|
+  fill_in('job_offer[location]', with: location)
+end
+
+When('set description to {string}') do |description|
+  fill_in('job_offer[description]', with: description)
+end

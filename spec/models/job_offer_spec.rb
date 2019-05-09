@@ -1,4 +1,5 @@
 require 'spec_helper'
+require 'byebug'
 
 describe JobOffer do
   subject(:job_offer) { described_class.new({}) }
@@ -13,6 +14,8 @@ describe JobOffer do
     it { is_expected.to respond_to(:created_on) }
     it { is_expected.to respond_to(:updated_on) }
     it { is_expected.to respond_to(:is_active) }
+    it { is_expected.to respond_to(:validity_date) }
+    it { is_expected.to respond_to(:validity_time) }
   end
 
   describe 'valid?' do
@@ -24,7 +27,42 @@ describe JobOffer do
 
     it 'should be valid when title is not blank' do
       job_offer = described_class.new(title: 'a title')
+      job_offer.valid?
       expect(job_offer).to be_valid
+    end
+    it 'should be valid when validity date is/isnt blank' do
+      job_offer1 = described_class.new(title: 'a title')
+      job_offer2 = described_class.new(title: 'a title',
+                                       validity_date: '2019-05-29', validity_time: '04:06')
+      expect(job_offer2).to be_valid
+      expect(job_offer1).to be_valid
+    end
+    it 'should be valid when validity date is in the correct format' do
+      job_offer = described_class.new(title: 'a title',
+                                      validity_date: '2019-05-29', validity_time: '04:07')
+      expect(job_offer).to be_valid
+    end
+    it 'should be invalid when validity date is in the incorrect format' do
+      job_offer = described_class.new(title: 'a title',
+                                      validity_date: '2019-05-29', validity_time: '04:05')
+      expect(job_offer).to be_valid
+    end
+  end
+
+  describe 'expired?' do
+    it 'should not be expired if validity date is tomorrow' do
+      job_offer = described_class.new(title: 'a title',
+                                      validity_date: Date.today.next_day.strftime,
+                                      validity_time: '04:05',
+                                      updated_on: Date.today)
+      expect(job_offer.expired_offer?).to eq false
+    end
+    it 'should be expired if validity date was yesterday' do
+      job_offer = described_class.new(title: 'a title',
+                                      validity_date: Date.today.prev_day.strftime,
+                                      validity_time: '04:05',
+                                      updated_on: Date.today)
+      expect(job_offer.expired_offer?).to eq true
     end
   end
 end

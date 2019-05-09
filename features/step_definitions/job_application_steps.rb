@@ -5,6 +5,7 @@ Given(/^only a "(.*?)" offer exists in the offers list$/) do |job_title|
   @job_offer.location = 'a nice job'
   @job_offer.description = 'a nice job'
   @job_offer.is_active = true
+  @job_offer.updated_on = DateTime.now
 
   JobOfferRepository.new.save @job_offer
 end
@@ -16,6 +17,7 @@ end
 When(/^I apply$/) do
   click_link 'Apply'
   fill_in('job_application[applicant_email]', with: 'applicant@test.com')
+  fill_in('job_application[bio]', with: 'short bio')
   click_button('Apply')
 end
 
