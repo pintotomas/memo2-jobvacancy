@@ -27,6 +27,7 @@ describe JobOffer do
 
     it 'should be valid when title is not blank' do
       job_offer = described_class.new(title: 'a title')
+      job_offer.valid?
       expect(job_offer).to be_valid
     end
     it 'should be valid when validity date is/isnt blank' do
@@ -51,13 +52,15 @@ describe JobOffer do
   describe 'expired?' do
     it 'should not be expired if validity date is tomorrow' do
       job_offer = described_class.new(title: 'a title',
-                                      validity_date: Date.today.next_day, validity_time: '04:05',
+                                      validity_date: Date.today.next_day.strftime,
+                                      validity_time: '04:05',
                                       updated_on: Date.today)
       expect(job_offer.expired_offer?).to eq false
     end
     it 'should be expired if validity date was yesterday' do
       job_offer = described_class.new(title: 'a title',
-                                      validity_date: Date.today.prev_day, validity_time: '04:05',
+                                      validity_date: Date.today.prev_day.strftime,
+                                      validity_time: '04:05',
                                       updated_on: Date.today)
       expect(job_offer.expired_offer?).to eq true
     end

@@ -52,8 +52,10 @@ class JobOffer
   def expired_offer?
     return false if @validity_date.nil?
 
-    expire_time = @validity_date.to_time + Time.parse(@validity_time).hour *
-                                           SECONDS_IN_HOUR +
+    expiration_date = Date.strptime(@validity_date, '%Y-%m-%d')
+
+    expire_time = expiration_date.to_time + Time.parse(@validity_time).hour *
+                                            SECONDS_IN_HOUR +
                   Time.parse(@validity_time).min * SECONDS_IN_MINUTE
 
     expire_time < DateTime.now
@@ -61,22 +63,32 @@ class JobOffer
 
   def validate_date
     @not_valid = false
+    unless @validity_time.nil?
+      @not_valid = true if @validity_date.nil?
+      errors.add(:validity_date, 'invalid. Must be present if specified a time') if @not_valid
+      return
+    end
+    # return if @validity_date.instance_of? Date # already saved before
     return if @validity_date.nil?
-    return if @validity_date.instance_of? Date # already saved before
 
     Date.strptime(@validity_date, '%Y-%m-%d')
   rescue ArgumentError
     @not_valid = true
-    errors.add(:validity_date, 'invalid format')
+    errors.add(:validity_date, 'invalid validity date format')
   end
 
   def validate_time
     @not_valid = false
+    unless @validity_date.nil?
+      @not_valid = true if @validity_time.nil?
+      errors.add(:validity_time, 'invalid. Must be present if specified a date') if @not_valid
+      return
+    end
     return if @validity_time.nil?
 
     DateTime.strptime(validity_time, '%H:%M')
   rescue ArgumentError
     @not_valid = true
-    errors.add(:validity_time, 'invalid format')
+    errors.add(:validity_time, 'invalid. Must be present if specified a date')
   end
 end

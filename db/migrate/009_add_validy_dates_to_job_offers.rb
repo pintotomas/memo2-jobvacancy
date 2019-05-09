@@ -1,7 +1,7 @@
 Sequel.migration do
   up do
-    add_column :job_offers, :validity_date, Date
-    add_column :job_offers, :validity_time, Date
+    add_column :job_offers, :validity_date, String
+    add_column :job_offers, :validity_time, String
   end
 
   down do
