@@ -66,7 +66,6 @@ class JobOffer
     unless @validity_time.nil?
       @not_valid = true if @validity_date.nil?
       errors.add(:validity_date, 'invalid. Must be present if specified a time') if @not_valid
-      return
     end
     # return if @validity_date.instance_of? Date # already saved before
     return if @validity_date.nil?
@@ -82,7 +81,6 @@ class JobOffer
     unless @validity_date.nil?
       @not_valid = true if @validity_time.nil?
       errors.add(:validity_time, 'invalid. Must be present if specified a date') if @not_valid
-      return
     end
     return if @validity_time.nil?
 

@@ -40,10 +40,16 @@ JobVacancy::App.controllers :job_offers do
 
   post :apply, with: :offer_id do
     @job_offer = JobOfferRepository.new.find(params[:offer_id])
-    applicant_email = params[:job_application][:applicant_email]
-    @job_application = JobApplication.create_for(applicant_email, @job_offer)
-    @job_application.process
-    flash[:success] = 'Contact information sent.'
+    if @job_offer.expired_offer? || @job_offer.old_offer?
+      flash[:error] = 'Offer expired while you were applying'
+
+    else
+      applicant_email = params[:job_application][:applicant_email]
+      @job_application = JobApplication.create_for(applicant_email, @job_offer)
+      @job_application.process
+      flash[:success] = 'Contact information sent.'
+
+    end
     redirect '/job_offers'
   end
 
