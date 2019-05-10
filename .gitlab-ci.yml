@@ -25,6 +25,6 @@ job_deploy_staging:
   stage: deploy_staging
   script:
   - gem install dpl
-  - dpl --provider=heroku --app=invernaliajobvacancystaging --api-key=2450822b-bb16-4a8b-a4c5-0da58d574dca
+  - dpl --provider=heroku --app=invernaliajobvacancystaging --api-key=f8946308-e507-41d1-82b6-8ecdb1fed1c6
   only:
   - staging
