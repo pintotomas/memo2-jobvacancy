@@ -98,5 +98,10 @@ describe JobOffer do
       job_offer.unsatisfy
       expect(job_offer.satisfied?).to eq false
     end
+    it 'unsatisfy an offer that is not satisfied' do
+      job_offer = described_class.new(title: 'a title', validity_date: Date.today.prev_day.strftime,
+                                      validity_time: '04:05', updated_on: Date.today)
+      expect { job_offer.unsatisfy }.to raise_error(NotSatisfiedError)
+    end
   end
 end
