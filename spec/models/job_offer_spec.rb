@@ -73,7 +73,16 @@ describe JobOffer do
                                       validity_date: Date.today.prev_day.strftime,
                                       validity_time: '04:05',
                                       updated_on: Date.today)
-      expect(job_offer.satisfied_offer?).to eq false
+      expect(job_offer.satisfied?).to eq false
+    end
+
+    it 'should be satisfied after marking it as satisfied' do
+      job_offer = described_class.new(title: 'a title',
+                                      validity_date: Date.today.prev_day.strftime,
+                                      validity_time: '04:05',
+                                      updated_on: Date.today)
+      job_offer.satisfy
+      expect(job_offer.satisfied?).to eq true
     end
   end
 end
