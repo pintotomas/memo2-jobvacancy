@@ -1,0 +1,2 @@
+class AlreadySatisfiedError < StandardError
+end

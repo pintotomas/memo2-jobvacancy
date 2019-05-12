@@ -84,5 +84,12 @@ describe JobOffer do
       job_offer.satisfy
       expect(job_offer.satisfied?).to eq true
     end
+
+    it 'satisfy an offer two times should raise error' do
+      job_offer = described_class.new(title: 'a title', validity_date: Date.today.prev_day.strftime,
+                                      validity_time: '04:05', updated_on: Date.today)
+      job_offer.satisfy
+      expect { job_offer.satisfy }.to raise_error(AlreadySatisfiedError)
+    end
   end
 end

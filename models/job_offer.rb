@@ -49,6 +49,8 @@ class JobOffer
   end
 
   def satisfy
+    raise AlreadySatisfiedError if @satisfied
+
     @satisfied = true
   end
 
