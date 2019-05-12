@@ -54,6 +54,10 @@ class JobOffer
     @satisfied = true
   end
 
+  def unsatisfy
+    @satisfied = false
+  end
+
   def old_offer?
     return (Date.today - updated_on) >= 30 if @validity_date.nil?
 
