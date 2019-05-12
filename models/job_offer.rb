@@ -3,7 +3,7 @@ class JobOffer
   attr_accessor :id, :user, :user_id, :title,
                 :location, :description, :is_active,
                 :updated_on, :created_on, :validity_date,
-                :validity_time
+                :validity_time, :satisfied
 
   validates :title, presence: true
   validate :validate_date, :validate_time
@@ -17,6 +17,7 @@ class JobOffer
     @description = data[:description]
     @is_active = data[:is_active]
     @user_id = data[:user_id]
+    @satisfied_offer = data[:satisfied]
     initialize_dates(data)
   end
 

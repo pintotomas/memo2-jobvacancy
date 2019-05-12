@@ -16,6 +16,7 @@ describe JobOffer do
     it { is_expected.to respond_to(:is_active) }
     it { is_expected.to respond_to(:validity_date) }
     it { is_expected.to respond_to(:validity_time) }
+    it { is_expected.to respond_to(:satisfied) }
   end
 
   describe 'valid?' do
