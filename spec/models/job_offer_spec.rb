@@ -66,4 +66,14 @@ describe JobOffer do
       expect(job_offer.expired_offer?).to eq true
     end
   end
+
+  describe 'satisfied?' do
+    it 'shouldnt be satisfied when it was just created' do
+      job_offer = described_class.new(title: 'a title',
+                                      validity_date: Date.today.prev_day.strftime,
+                                      validity_time: '04:05',
+                                      updated_on: Date.today)
+      expect(job_offer.satisfied_offer?).to eq false
+    end
+  end
 end

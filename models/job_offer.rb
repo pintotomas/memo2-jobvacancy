@@ -17,7 +17,7 @@ class JobOffer
     @description = data[:description]
     @is_active = data[:is_active]
     @user_id = data[:user_id]
-    @satisfied_offer = data[:satisfied]
+    @satisfied = data[:satisfied]
     initialize_dates(data)
   end
 
@@ -42,6 +42,10 @@ class JobOffer
 
   def deactivate
     self.is_active = false
+  end
+
+  def satisfied_offer?
+    false
   end
 
   def old_offer?
