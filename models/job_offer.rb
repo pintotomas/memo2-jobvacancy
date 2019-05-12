@@ -55,6 +55,8 @@ class JobOffer
   end
 
   def unsatisfy
+    raise NotSatisfiedError unless @satisfied
+
     @satisfied = false
   end
 
