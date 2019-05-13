@@ -55,6 +55,7 @@ class JobOffer
   end
 
   def unsatisfy
+    raise CantUnsatisfyOldOrExpiredOffer if expired_offer?
     raise NotSatisfiedError unless @satisfied
 
     @satisfied = false

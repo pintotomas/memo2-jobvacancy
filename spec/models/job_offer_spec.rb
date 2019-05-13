@@ -70,7 +70,7 @@ describe JobOffer do
   describe 'satisfied?' do
     it 'shouldnt be satisfied when it was just created' do
       job_offer = described_class.new(title: 'a title',
-                                      validity_date: Date.today.prev_day.strftime,
+                                      validity_date: Date.today.next_day.strftime,
                                       validity_time: '04:05',
                                       updated_on: Date.today)
       expect(job_offer.satisfied?).to eq false
@@ -78,7 +78,7 @@ describe JobOffer do
 
     it 'should be satisfied after marking it as satisfied' do
       job_offer = described_class.new(title: 'a title',
-                                      validity_date: Date.today.prev_day.strftime,
+                                      validity_date: Date.today.next_day.strftime,
                                       validity_time: '04:05',
                                       updated_on: Date.today)
       job_offer.satisfy
@@ -86,22 +86,27 @@ describe JobOffer do
     end
 
     it 'satisfy an offer two times should raise error' do
-      job_offer = described_class.new(title: 'a title', validity_date: Date.today.prev_day.strftime,
+      job_offer = described_class.new(title: 'a title', validity_date: Date.today.next_day.strftime,
                                       validity_time: '04:05', updated_on: Date.today)
       job_offer.satisfy
       expect { job_offer.satisfy }.to raise_error(AlreadySatisfiedError)
     end
     it 'unsatisfy a satisfied offer' do
-      job_offer = described_class.new(title: 'a title', validity_date: Date.today.prev_day.strftime,
+      job_offer = described_class.new(title: 'a title', validity_date: Date.today.next_day.strftime,
                                       validity_time: '04:05', updated_on: Date.today)
       job_offer.satisfy
       job_offer.unsatisfy
       expect(job_offer.satisfied?).to eq false
     end
     it 'unsatisfy an offer that is not satisfied' do
-      job_offer = described_class.new(title: 'a title', validity_date: Date.today.prev_day.strftime,
+      job_offer = described_class.new(title: 'a title', validity_date: Date.today.next_day.strftime,
                                       validity_time: '04:05', updated_on: Date.today)
       expect { job_offer.unsatisfy }.to raise_error(NotSatisfiedError)
+    end
+    it 'unsatisfy an offer that has expired due to validity date' do
+      job_offer = described_class.new(title: 'a title', validity_date: Date.today.prev_day.strftime,
+                                      validity_time: '04:05', updated_on: Date.today)
+      expect { job_offer.unsatisfy }.to raise_error(CantUnsatisfyOldOrExpiredOffer)
     end
   end
 end
