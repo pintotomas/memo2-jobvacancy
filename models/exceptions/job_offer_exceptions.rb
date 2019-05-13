@@ -12,3 +12,6 @@ end
 
 class CantSatisfyOldOffer < StandardError
 end
+
+class CantSatisfyExpiredOffer < StandardError
+end

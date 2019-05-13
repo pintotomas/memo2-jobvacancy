@@ -116,5 +116,11 @@ describe JobOffer do
       job_offer = described_class.new(title: 'a title', updated_on: Date.new(2013, 2, 2))
       expect { job_offer.satisfy }.to raise_error(CantSatisfyOldOffer)
     end
+    # Preguntar, si expiro, deberia setearse como satisfecha automaticamente?
+    it 'satisfy an offer that has expired due to validity date' do
+      job_offer = described_class.new(title: 'a title', validity_date: Date.today.prev_day.strftime,
+                                      validity_time: '04:05', updated_on: Date.today)
+      expect { job_offer.satisfy }.to raise_error(CantSatisfyExpiredOffer)
+    end
   end
 end
