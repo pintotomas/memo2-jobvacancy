@@ -49,7 +49,8 @@ class JobOfferRepository < BaseRepository
       validity_time:  offer.validity_time,
       description: offer.description,
       is_active: offer.is_active,
-      user_id: offer.owner&.id || offer.user_id
+      user_id: offer.owner&.id || offer.user_id,
+      satisfied: offer.satisfied
     }
   end
 end
