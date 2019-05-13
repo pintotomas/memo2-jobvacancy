@@ -9,3 +9,6 @@ end
 
 class CantUnsatisfyOldOffer < StandardError
 end
+
+class CantSatisfyOldOffer < StandardError
+end

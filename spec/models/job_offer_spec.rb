@@ -112,5 +112,9 @@ describe JobOffer do
       job_offer = described_class.new(title: 'a title', updated_on: Date.new(2013, 2, 2))
       expect { job_offer.unsatisfy }.to raise_error(CantUnsatisfyOldOffer)
     end
+    it 'satisfy an offer that has expired because its too old' do
+      job_offer = described_class.new(title: 'a title', updated_on: Date.new(2013, 2, 2))
+      expect { job_offer.satisfy }.to raise_error(CantSatisfyOldOffer)
+    end
   end
 end

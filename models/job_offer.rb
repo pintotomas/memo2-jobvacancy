@@ -49,6 +49,7 @@ class JobOffer
   end
 
   def satisfy
+    raise CantSatisfyOldOffer if old_offer?
     raise AlreadySatisfiedError if @satisfied
 
     @satisfied = true
