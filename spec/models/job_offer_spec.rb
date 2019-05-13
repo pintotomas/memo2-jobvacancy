@@ -106,7 +106,11 @@ describe JobOffer do
     it 'unsatisfy an offer that has expired due to validity date' do
       job_offer = described_class.new(title: 'a title', validity_date: Date.today.prev_day.strftime,
                                       validity_time: '04:05', updated_on: Date.today)
-      expect { job_offer.unsatisfy }.to raise_error(CantUnsatisfyOldOrExpiredOffer)
+      expect { job_offer.unsatisfy }.to raise_error(CantUnsatisfyExpiredOffer)
+    end
+    it 'unsatisfy an offer that has expired because its too old' do
+      job_offer = described_class.new(title: 'a title', updated_on: Date.new(2013, 2, 2))
+      expect { job_offer.unsatisfy }.to raise_error(CantUnsatisfyOldOffer)
     end
   end
 end

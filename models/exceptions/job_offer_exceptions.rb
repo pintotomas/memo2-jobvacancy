@@ -4,5 +4,8 @@ end
 class NotSatisfiedError < StandardError
 end
 
-class CantUnsatisfyOldOrExpiredOffer < StandardError
+class CantUnsatisfyExpiredOffer < StandardError
+end
+
+class CantUnsatisfyOldOffer < StandardError
 end
