@@ -32,9 +32,15 @@ describe User do
       expect(user.errors).to have_key(:crypted_password)
     end
 
+    it 'should be true when password has a symbol' do
+      user = described_class.new(name: 'John Doe', email: 'john@doe.com',
+                                 password: 'Falafel!')
+      expect(user.valid?).to eq true
+    end
+
     it 'should be true when all field are valid' do
       user = described_class.new(name: 'John Doe', email: 'john@doe.com',
-                                 password: 'Aa123456!', crypted_password: 'a_secure_passWord!')
+                                 password: 'Aa123456', crypted_password: 'a_secure_passWord!')
       expect(user.valid?).to eq true
     end
   end
