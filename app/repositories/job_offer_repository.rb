@@ -6,6 +6,10 @@ class JobOfferRepository < BaseRepository
     load_collection dataset.where(is_active: true)
   end
 
+  def all_unsatisfied
+    ['nonsense']
+  end
+
   def find_by_owner(user)
     load_collection dataset.where(user_id: user.id)
   end

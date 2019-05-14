@@ -103,4 +103,30 @@ describe JobOfferRepository do
       expect(not_updated_offer.is_active).to eq true
     end
   end
+
+  describe 'filter unsatisfied offers' do
+    let!(:satisfied_offer) do
+      satisfied_offer = JobOffer.new(title: 'a title',
+                                     updated_on: Date.today,
+                                     is_active: true,
+                                     user_id: owner.id,
+                                     satisfied: true)
+      repository.save(satisfied_offer)
+      satisfied_offer
+    end
+    let!(:unsatisfied_offer) do
+      unsatisfied_offer = JobOffer.new(title: 'a title',
+                                       updated_on: Date.today,
+                                       is_active: true,
+                                       user_id: owner.id,
+                                       satisfied: false)
+      repository.save(unsatisfied_offer)
+      unsatisfied_offer
+    end
+
+    it 'should find only one unsatisfied offer' do
+      unsatisfied_offers = repository.all_unsatisfied
+      expect(unsatisfied_offers.length).to eq 1
+    end
+  end
 end
