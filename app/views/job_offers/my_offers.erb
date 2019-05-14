@@ -44,6 +44,18 @@
 	                <button type="button" class="btn btn-secondary btn-lg" disabled>Expired</button>
 	       <% end %>
        <% end %>
+       <% if offer.is_active and not offer.satisfied?%>
+				<%- form_tag url(:job_offers, :satisfy, :offer_id => offer.id), :method => :put, :style => 'display:inline' do %>
+	                <button type='submit' title="Satisfied offer" rel='tooltip' class="btn btn-secondary" >Satisfied
+	                </button>
+	       <% end %>
+       <% end %>
+       <% if offer.is_active and offer.satisfied?%>
+				<%- form_tag url(:job_offers, :unsatisfy, :offer_id => offer.id), :method => :put, :style => 'display:inline' do %>
+	                <button type='submit' title="Satisfied offer" rel='tooltip' class="btn btn-secondary" >Unsatisfy
+	                </button>
+	       <% end %>
+       <% end %>
 
 		</td>	
 	</tr>

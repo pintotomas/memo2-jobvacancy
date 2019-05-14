@@ -17,7 +17,7 @@ JobVacancy::App.controllers :job_offers do
 
   get :latest do
     JobOfferRepository.new.deactivate_old_offers
-    @offers = JobOfferRepository.new.all_active
+    @offers = JobOfferRepository.new.all_active_and_unsatisfied
     render 'job_offers/list'
   end
 
@@ -117,7 +117,7 @@ JobVacancy::App.controllers :job_offers do
     @job_offer = JobOfferRepository.new.find(params[:offer_id])
     @job_offer.unsatisfy
     if JobOfferRepository.new.save(@job_offer)
-      flash[:success] = 'Offer satisfied!'
+      flash[:success] = 'Offer unsatisfied!'
     else
       flash.now[:error] = 'Operation failed'
     end
