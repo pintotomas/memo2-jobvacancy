@@ -128,5 +128,12 @@ describe JobOfferRepository do
       unsatisfied_offers = repository.all_unsatisfied
       expect(unsatisfied_offers.length).to eq 1
     end
+
+    it 'should find two unsatisfied offers after unsatisfying a satisfied offer' do
+      satisfied_offer.unsatisfy
+      repository.save(satisfied_offer)
+      unsatisfied_offers = repository.all_unsatisfied
+      expect(unsatisfied_offers.length).to eq 2
+    end
   end
 end

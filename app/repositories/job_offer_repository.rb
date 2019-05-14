@@ -7,7 +7,7 @@ class JobOfferRepository < BaseRepository
   end
 
   def all_unsatisfied
-    ['nonsense']
+    load_collection dataset.where(satisfied: false)
   end
 
   def find_by_owner(user)
