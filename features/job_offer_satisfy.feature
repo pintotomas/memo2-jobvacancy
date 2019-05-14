@@ -8,3 +8,10 @@ Scenario: Record my offer as satisfied
       And I activate it
    	  When I record It as satisfied
       Then  I should not see "Ruby dev" in Job Offers
+
+Scenario: Record my offer as dissatisfied
+      Given I am seeing "Ruby dev" in My Offers 
+      And I activate it   
+      When I record It as satisfied
+      And I record It as dissatisfied
+      Then  I should see "Ruby dev" in Job Offers

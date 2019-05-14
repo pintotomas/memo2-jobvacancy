@@ -52,7 +52,7 @@
        <% end %>
        <% if offer.is_active and offer.satisfied?%>
 				<%- form_tag url(:job_offers, :unsatisfy, :offer_id => offer.id), :method => :put, :style => 'display:inline' do %>
-	                <button type='submit' title="Satisfied offer" rel='tooltip' class="btn btn-secondary" >Unsatisfy
+	                <button type='submit' title="Unsatisfied offer" rel='tooltip' class="btn btn-secondary" >Unsatisfy
 	                </button>
 	       <% end %>
        <% end %>

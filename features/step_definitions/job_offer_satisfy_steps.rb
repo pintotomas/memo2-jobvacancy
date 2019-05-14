@@ -15,3 +15,12 @@ end
 Given('I activate it') do
   click_button('Activate')
 end
+
+When('I record It as dissatisfied') do
+  click_button('Unsatisfied offer')
+end
+
+Then('I should see {string} in Job Offers') do |title|
+  visit '/job_offers/latest'
+  page.should have_content(title)
+end
