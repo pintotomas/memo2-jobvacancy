@@ -2,7 +2,7 @@ require 'integration_spec_helper'
 
 describe 'JobOffersController' do
   let(:current_user) do
-    user = User.new(name: 'Joe', email: 'joe@doe.com', crypted_password: 'secure_pwd')
+    user = User.new(name: 'Joe', email: 'joe@doe.com', password: 'Aa123456')
     UserRepository.new.save(user)
     user
   end

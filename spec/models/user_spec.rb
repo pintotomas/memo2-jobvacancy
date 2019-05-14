@@ -34,7 +34,7 @@ describe User do
 
     it 'should be true when all field are valid' do
       user = described_class.new(name: 'John Doe', email: 'john@doe.com',
-                                 crypted_password: 'a_secure_passWord!')
+                                 password: 'Aa123456!', crypted_password: 'a_secure_passWord!')
       expect(user.valid?).to eq true
     end
   end

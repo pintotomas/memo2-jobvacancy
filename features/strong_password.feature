@@ -9,8 +9,8 @@ Feature: Strong passwords
     And my name is "Bob"
     And my email is "bob@test.com"
     
-  @wip
   Scenario: Valid password with number
     Given I fill with "Valid123" the password fields
+    And I fill with "Valid123" the password confirmation fields
     When I confirm the registration
     Then I should see the message "User created"
