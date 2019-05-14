@@ -7,6 +7,16 @@ describe 'JobOffersController' do
     user
   end
 
+  let(:repository) { JobOfferRepository.new }
+  let!(:offer) do
+    offer = JobOffer.new(title: 'a title',
+                         updated_on: Date.today,
+                         is_active: true,
+                         user_id: current_user.id)
+    repository.save(offer)
+    offer
+  end
+
   let(:signed_in_session) { { 'rack.session' => { 'current_user' => current_user.id } } }
 
   describe 'get :new' do
@@ -31,9 +41,27 @@ describe 'JobOffersController' do
 
     it 'should not call TwitterClient when create_and_twit not present' do
       expect(TwitterClient).not_to receive(:publish)
-
       post '/job_offers/create', { job_offer: { title: 'Programmer offer' } }, signed_in_session
       expect(last_response.location).to eq('http://example.org/job_offers/my')
+    end
+  end
+
+  describe 'put :satisfy' do
+    it 'should satisfy offer' do
+      id = repository.search_by_title('a title')[0].id
+      put '/job_offers/satisfy/' + String(id), job_offer: { offer_id: id }
+      expect(last_response.location).to eq('http://example.org/job_offers/my')
+      expect(repository.search_by_title('a title')[0].satisfied?).to eq true
+    end
+  end
+
+  describe 'put :sunatisfy' do
+    it 'should unsatisfy offer' do
+      id = repository.search_by_title('a title')[0].id
+      put '/job_offers/satisfy/' + String(id), job_offer: { offer_id: id }
+      put '/job_offers/unsatisfy/' + String(id), job_offer: { offer_id: id }
+      expect(last_response.location).to eq('http://example.org/job_offers/my')
+      expect(repository.search_by_title('a title')[0].satisfied?).to eq false
     end
   end
 end

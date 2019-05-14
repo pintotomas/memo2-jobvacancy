@@ -3,7 +3,7 @@ class JobOffer
   attr_accessor :id, :user, :user_id, :title,
                 :location, :description, :is_active,
                 :updated_on, :created_on, :validity_date,
-                :validity_time
+                :validity_time, :satisfied
 
   validates :title, presence: true
   validate :validate_date, :validate_time
@@ -17,6 +17,7 @@ class JobOffer
     @description = data[:description]
     @is_active = data[:is_active]
     @user_id = data[:user_id]
+    @satisfied = data[:satisfied].nil? ? false : data[:satisfied]
     initialize_dates(data)
   end
 
@@ -41,6 +42,26 @@ class JobOffer
 
   def deactivate
     self.is_active = false
+  end
+
+  def satisfied?
+    @satisfied
+  end
+
+  def satisfy
+    raise CantSatisfyExpiredOffer if expired_offer?
+    raise CantSatisfyOldOffer if old_offer?
+    raise AlreadySatisfiedError if @satisfied
+
+    @satisfied = true
+  end
+
+  def unsatisfy
+    raise CantUnsatisfyExpiredOffer if expired_offer?
+    raise CantUnsatisfyOldOffer if old_offer?
+    raise NotSatisfiedError unless @satisfied
+
+    @satisfied = false
   end
 
   def old_offer?
