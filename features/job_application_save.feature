@@ -8,6 +8,6 @@
     And I set my email to "fakemail@gmail.com"
     And I fill the short bio with "short bio"
     When I confirm my application
-    Then information on the job application should be saved.
+    Then information on the job application for "javascript developer" should be saved.
 
 

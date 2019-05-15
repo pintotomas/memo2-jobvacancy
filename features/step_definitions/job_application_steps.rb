@@ -31,3 +31,9 @@ Then(/^I should receive a mail with offerer info$/) do
   content.include?(@job_offer.owner.email).should be true
   content.include?(@job_offer.owner.name).should be true
 end
+
+Then('information on the job application for {string} should be saved.') do |title|
+  offer = JobOfferRepository.new.find_by_title(title)[0]
+  applications = JobApplicationRepository.new.find_by_offer(offer)
+  expect(applications.length).to eq 1
+end
