@@ -20,3 +20,13 @@ Feature: Job Offers Experience
     When I confirm the new offer
     Then my offer is created successfully
 
+  @wip
+  Scenario: Experience over maximum allowed amount (20)
+    Given I access the new offer page
+    And I fill the title with "Java dev"
+    And I fill the experience with "21"
+    When I confirm the new offer
+    Then the experience amount validation fails
+    And my offer is not created
+
+
