@@ -3,7 +3,7 @@ class JobOffer
   attr_accessor :id, :user, :user_id, :title,
                 :location, :description, :is_active,
                 :updated_on, :created_on, :validity_date,
-                :validity_time, :satisfied
+                :validity_time, :satisfied, :experience
 
   validates :title, presence: true
   validate :validate_date, :validate_time
@@ -12,13 +12,18 @@ class JobOffer
 
   def initialize(data = {})
     @id = data[:id]
-    @title = data[:title]
-    @location = data[:location]
-    @description = data[:description]
     @is_active = data[:is_active]
     @user_id = data[:user_id]
     @satisfied = data[:satisfied].nil? ? false : data[:satisfied]
+    initialize_things_of_view(data)
     initialize_dates(data)
+  end
+
+  def initialize_things_of_view(data)
+    @title = data[:title]
+    @location = data[:location]
+    @description = data[:description]
+    @experience = data[:experience].nil? ? 0 : data[:experience]
   end
 
   def initialize_dates(data = {})

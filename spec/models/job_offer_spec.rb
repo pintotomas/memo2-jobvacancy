@@ -17,6 +17,7 @@ describe JobOffer do
     it { is_expected.to respond_to(:validity_date) }
     it { is_expected.to respond_to(:validity_time) }
     it { is_expected.to respond_to(:satisfied) }
+    it { is_expected.to respond_to(:experience) }
   end
 
   describe 'valid?' do
@@ -121,6 +122,17 @@ describe JobOffer do
       job_offer = described_class.new(title: 'a title', validity_date: Date.today.prev_day.strftime,
                                       validity_time: '04:05', updated_on: Date.today)
       expect { job_offer.satisfy }.to raise_error(CantSatisfyExpiredOffer)
+    end
+  end
+
+  describe 'experience' do
+    it 'job offer should be able to be created with experience' do
+      job_offer = described_class.new(title: 'a title',
+                                      validity_date: Date.today.next_day.strftime,
+                                      validity_time: '04:05',
+                                      experience: 1,
+                                      updated_on: Date.today)
+      expect(job_offer.experience).to eq 1
     end
   end
 end

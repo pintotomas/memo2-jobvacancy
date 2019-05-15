@@ -58,7 +58,8 @@ class JobOfferRepository < BaseRepository
       description: offer.description,
       is_active: offer.is_active,
       user_id: offer.owner&.id || offer.user_id,
-      satisfied: offer.satisfied
+      satisfied: offer.satisfied,
+      experience: offer.experience
     }
   end
 end
