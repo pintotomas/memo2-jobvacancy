@@ -84,7 +84,7 @@ JobVacancy::App.controllers :job_offers do
       flash[:success] = 'Offer updated'
       redirect '/job_offers/my'
     else
-      flash.now[:error] = 'Title is mandatory'
+      flash.now[:error] = @job_offer.errors.full_messages.join(', ')
       render 'job_offers/edit'
     end
   end
