@@ -18,9 +18,10 @@ Given("I don't fill the experience field") do
 end
 
 Then('the experience amount validation fails') do
-  pending # Write code here that turns the phrase above into concrete actions
+  page.should have_content('Experience must be')
 end
 
 Then('my offer is not created') do
-  page.should have_content(@experience)
+  visit '/job_offers/my'
+  page.should_not have_content(@experience)
 end
