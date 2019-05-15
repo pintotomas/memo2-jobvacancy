@@ -32,10 +32,9 @@ Feature: Job Validity Date
     When I visit my offers
     Then I should see  "Expired"
 
-  # @wip
-  # Scenario: Applying to an expired offer
-  #   Given "Pascal developer" offer expires in one minute
-  #   When I try to apply to the offer that will expire
-  #   And I wait two minutes
-  #   And I apply to the offer
-  #   Then I should see  "Offer expired while you were applying"
+  Scenario: Applying to an expired offer
+    Given "Pascal developer" offer expires in one minute
+    When I try to apply to the offer that will expire
+    And I wait two minutes
+    And I apply to the offer
+    Then I should see  "Offer expired while you were applying"

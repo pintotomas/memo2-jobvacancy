@@ -36,7 +36,6 @@ Feature: Job Offers Experience
     Then the offer should be updated
     And  the offer’s experience should be 6
 
-  @wip
   Scenario: Update offer experience fails
     Given I have "Programmer vacancyy" offer with 1 experience required offer in My Offers
     And I edit it
