@@ -45,5 +45,7 @@ class User
   def validate_password
     aplicate_regex = @created_on.nil? && !PASSWORD_VALIDATOR.match?(@password)
     errors.add(:password, 'invalid format') if aplicate_regex
+    has_eight_characters = @created_on.nil? && !@password.nil? && @password.length == 8
+    errors.add(:password, 'Must have 8 characters') unless has_eight_characters
   end
 end
