@@ -33,7 +33,7 @@ Feature: Strong passwords
 
   @wip
   Scenario: Short password
-    Given I fil withl "Test123" the password fields
+    Given I fil with "Test123" the password fields
     When I confirm the registration
     Then My user should not have been created
 

@@ -19,6 +19,8 @@ class User
                                               message: 'invalid email' }
   validate :validate_password
 
+  validates :password, length: { is: 8 }
+
   def initialize(data = {})
     @id = data[:id]
     @name = data[:name]
