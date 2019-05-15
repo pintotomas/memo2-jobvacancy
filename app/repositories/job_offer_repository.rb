@@ -35,8 +35,8 @@ class JobOfferRepository < BaseRepository
     end
   end
 
-  def search_by_title(title)
-    load_collection dataset.where(Sequel.like(:title, "%#{title}%"))
+  def search(term)
+    load_collection dataset.where(Sequel.like(:title, "%#{term}%"))
   end
 
   protected

@@ -136,4 +136,24 @@ describe JobOfferRepository do
       expect(unsatisfied_offers.length).to eq 2
     end
   end
+
+  describe 'search' do
+    let!(:today_offer) do
+      today_offer = JobOffer.new(title: 'great tittle',
+                                 updated_on: Date.today,
+                                 is_active: true,
+                                 user_id: owner.id,
+                                 description: 'amazing desc',
+                                 location: 'disney')
+      repository.save(today_offer)
+      today_offer
+    end
+
+    it 'should search by title' do
+      offer = repository.search(today_offer.title)[0]
+      expect(offer.title).to eq today_offer.title
+      expect(offer.description).to eq today_offer.description
+      expect(offer.location).to eq today_offer.location
+    end
+  end
 end
