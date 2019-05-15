@@ -31,5 +31,13 @@ Feature: Strong passwords
     When I confirm the registration
     Then My user should not have been created
 
+  @wip
+  Scenario: Short password
+    Given I fil withl "Test123" the password fields
+    When I confirm the registration
+    Then My user should not have been created
+
+
+
 
 
