@@ -102,14 +102,14 @@ JobVacancy::App.controllers :job_offers do
   end
 
   put :satisfy, with: :offer_id do
-    @job_offer = JobOfferRepository.new.find(params[:offer_id])
-    @job_offer.satisfy
-    if JobOfferRepository.new.save(@job_offer)
-      flash[:success] = 'Offer satisfied!'
-    else
+    begin
+      @job_offer = JobOfferRepository.new.find(params[:offer_id])
+      @job_offer.satisfy
+      flash[:success] = 'Offer satisfied!' if JobOfferRepository.new.save(@job_offer)
+    rescue AlreadySatisfiedError, CantSatisfyOldOffer, CantSatisfyExpiredOffer
       flash.now[:error] = 'Operation failed'
+      redirect 'home/index'
     end
-
     redirect '/job_offers/my'
   end
 

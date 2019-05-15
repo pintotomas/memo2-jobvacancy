@@ -53,6 +53,12 @@ describe 'JobOffersController' do
       expect(last_response.location).to eq('http://example.org/job_offers/my')
       expect(repository.search_by_title('a title')[0].satisfied?).to eq true
     end
+    it 'shouldnt satisfy offer if it was satisfied' do
+      id = repository.search_by_title('a title')[0].id
+      put '/job_offers/satisfy/' + String(id), job_offer: { offer_id: id }
+      put '/job_offers/satisfy/' + String(id), job_offer: { offer_id: id }
+      expect(last_response.location).to eq('http://example.org/home/index')
+    end
   end
 
   describe 'put :sunatisfy' do
