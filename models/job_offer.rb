@@ -3,21 +3,30 @@ class JobOffer
   attr_accessor :id, :user, :user_id, :title,
                 :location, :description, :is_active,
                 :updated_on, :created_on, :validity_date,
-                :validity_time
+                :validity_time, :satisfied, :experience
 
+  validates :experience, numericality: { allow_nil: true, greater_than:
+    -1, less_than_or_equal_to: 20 }
   validates :title, presence: true
   validate :validate_date, :validate_time
+
   SECONDS_IN_MINUTE = 60
   SECONDS_IN_HOUR = 60 * 60
 
   def initialize(data = {})
     @id = data[:id]
+    @is_active = data[:is_active]
+    @user_id = data[:user_id]
+    @satisfied = data[:satisfied].nil? ? false : data[:satisfied]
+    initialize_things_of_view(data)
+    initialize_dates(data)
+  end
+
+  def initialize_things_of_view(data)
     @title = data[:title]
     @location = data[:location]
     @description = data[:description]
-    @is_active = data[:is_active]
-    @user_id = data[:user_id]
-    initialize_dates(data)
+    @experience = data[:experience].blank? ? nil : data[:experience]
   end
 
   def initialize_dates(data = {})
@@ -41,6 +50,26 @@ class JobOffer
 
   def deactivate
     self.is_active = false
+  end
+
+  def satisfied?
+    @satisfied
+  end
+
+  def satisfy
+    raise CantSatisfyExpiredOffer if expired_offer?
+    raise CantSatisfyOldOffer if old_offer?
+    raise AlreadySatisfiedError if @satisfied
+
+    @satisfied = true
+  end
+
+  def unsatisfy
+    raise CantUnsatisfyExpiredOffer if expired_offer?
+    raise CantUnsatisfyOldOffer if old_offer?
+    raise NotSatisfiedError unless @satisfied
+
+    @satisfied = false
   end
 
   def old_offer?

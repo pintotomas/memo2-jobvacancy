@@ -6,6 +6,14 @@ class JobOfferRepository < BaseRepository
     load_collection dataset.where(is_active: true)
   end
 
+  def all_unsatisfied
+    load_collection dataset.where(satisfied: false)
+  end
+
+  def all_active_and_unsatisfied
+    load_collection dataset.where(satisfied: false, is_active: true)
+  end
+
   def find_by_owner(user)
     load_collection dataset.where(user_id: user.id)
   end
@@ -49,7 +57,9 @@ class JobOfferRepository < BaseRepository
       validity_time:  offer.validity_time,
       description: offer.description,
       is_active: offer.is_active,
-      user_id: offer.owner&.id || offer.user_id
+      user_id: offer.owner&.id || offer.user_id,
+      satisfied: offer.satisfied,
+      experience: offer.experience
     }
   end
 end
