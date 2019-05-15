@@ -22,6 +22,14 @@ Given('I fill with {string} the password confirmation fields') do |password_conf
   fill_in('user[password_confirmation]', with: password_confirmation)
 end
 
-Then('I should see the message {string}') do |message_ok|
-  page.should have_content(message_ok)
+Then('My user should have created') do
+  page.should have_content('User created')
+end
+
+Then('My user should have been created') do
+  page.should have_content('User created')
+end
+
+Then('My user should not have been created') do
+  page.should_not have_content('User created')
 end

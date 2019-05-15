@@ -13,12 +13,12 @@ Feature: Strong passwords
     Given I fill with "Valid123" the password fields
     And I fill with "Valid123" the password confirmation fields
     When I confirm the registration
-    Then I should see the message "User created"
+    Then My user should have been created
 
- @wip
   Scenario: Valid password with symbol
     Given I fill with "Falafel!" the password fields
     And I fill with "Falafel!" the password confirmation fields
     When I confirm the registration
-    Then I should see the message "User created"
+    Then My user should have been created
+
 
