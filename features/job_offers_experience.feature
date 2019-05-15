@@ -25,7 +25,6 @@ Feature: Job Offers Experience
     And I fill the title with "Java dev"
     And I fill the experience with 21
     When I confirm the new offer
-    Then the experience amount validation fails
     And my offer is not created
 
   Scenario: Update offer experience
@@ -38,11 +37,10 @@ Feature: Job Offers Experience
 
   @wip
   Scenario: Update offer experience fails
-    Given I have "Programmer vacancy" offer with "1" experience required offer in My Offers
+    Given I have "Programmer vacancyy" offer with 1 experience required offer in My Offers
     And I edit it
-    And I set experience to "45"
+    And I set experience to 45
     When  I save the modification
-    Then the experience amount validation fails
     And my offer is not updated
 
 
