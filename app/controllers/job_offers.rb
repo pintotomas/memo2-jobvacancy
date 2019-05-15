@@ -43,7 +43,10 @@ JobVacancy::App.controllers :job_offers do
     @job_offer = JobOfferRepository.new.find(params[:offer_id])
     if @job_offer.expired_offer? || @job_offer.old_offer?
       flash[:error] = 'Offer expired while you were applying'
-      redirect '/job_offers'
+      redirect '/job_offers/latest'
+    elsif @job_offer.satisfied?
+      flash[:error] = 'Offer was satisfied before you completed your application'
+      redirect '/job_offers/latest'
     else
       applicant_email = params[:job_application][:applicant_email]
       bio = params[:job_application][:bio]

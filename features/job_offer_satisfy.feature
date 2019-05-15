@@ -15,3 +15,11 @@ Scenario: Record my offer as dissatisfied
       When I record It as satisfied
       And I record It as dissatisfied
       Then  I should see "Ruby dev" in Job Offers
+
+Scenario: Apply after offer is satisfied
+      Given I am seeing "Ruby dev" in My Offers 
+      And I activate it   
+      And I am postulating to it
+      And It gets satisfied before I apply
+      And I apply to this offer
+      Then  I shouldnt be able to apply
