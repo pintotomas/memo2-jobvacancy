@@ -36,5 +36,15 @@ Feature: Job Offers Experience
     Then the offer should be updated
     And  the offer’s experience should be 6
 
+  @wip
+  Scenario: Update offer experience fails
+    Given I have "Programmer vacancy" offer with "1" experience required offer in My Offers
+    And I edit it
+    And I set experience to "45"
+    When  I save the modification
+    Then the experience amount validation fails
+    And my offer is not updated
+
+
 
 
