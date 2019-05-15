@@ -13,7 +13,6 @@ Feature: Job Offers Experience
     When I confirm the new offer
     Then my offer is created successfully
 
-  @wip
   Scenario: Years of experience field is optional
     Given I access the new offer page
     And I fill the title with "Java dev"

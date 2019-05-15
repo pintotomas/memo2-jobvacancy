@@ -134,5 +134,13 @@ describe JobOffer do
                                       updated_on: Date.today)
       expect(job_offer.experience).to eq 1
     end
+
+    it 'job offer should be able to be created without experience' do
+      job_offer = described_class.new(title: 'a title',
+                                      validity_date: Date.today.next_day.strftime,
+                                      validity_time: '04:05',
+                                      updated_on: Date.today)
+      expect(job_offer.valid?).to eq true
+    end
   end
 end
