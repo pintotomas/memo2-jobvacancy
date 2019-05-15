@@ -11,3 +11,8 @@ Then('my offer is created successfully') do
   visit '/job_offers/my'
   page.should have_content(@experience)
 end
+
+Given("I don't fill the experience field") do
+  fill_in('job_offer[experience]', with: nil)
+  @experience = 'Not specified'
+end

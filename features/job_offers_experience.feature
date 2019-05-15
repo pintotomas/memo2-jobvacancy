@@ -18,5 +18,5 @@ Feature: Job Offers Experience
     And I fill the title with "Java dev"
     And I don't fill the experience field
     When I confirm the new offer
-    Then my offer is created successfull
+    Then my offer is created successfully
 

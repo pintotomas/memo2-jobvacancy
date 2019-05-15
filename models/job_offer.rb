@@ -23,7 +23,7 @@ class JobOffer
     @title = data[:title]
     @location = data[:location]
     @description = data[:description]
-    @experience = data[:experience].nil? ? 0 : data[:experience]
+    @experience = data[:experience].blank? ? nil : data[:experience]
   end
 
   def initialize_dates(data = {})

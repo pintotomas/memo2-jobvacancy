@@ -28,8 +28,13 @@
 			<%= offer.is_active %>
 		</td>
 		<td>
-			<%= offer.experience %>
-		</td>		
+			<% if offer.experience.blank? %>
+				Not specified
+			<% else %>
+				<%= offer.experience %>
+			<% end %>
+		</td>
+
 
 		<td>
 			<%= link_to 'Edit', url_for(:job_offers, :edit, :offer_id => offer.id), :class => "btn btn-primary" %>
