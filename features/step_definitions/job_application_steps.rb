@@ -37,3 +37,9 @@ Then('information on the job application for {string} should be saved.') do |tit
   applications = JobApplicationRepository.new.find_by_offer(offer)
   expect(applications.length).to eq 1
 end
+
+Then('information on the job application for {string} should not be saved.') do |title|
+  offer = JobOfferRepository.new.find_by_title(title)[0]
+  applications = JobApplicationRepository.new.find_by_offer(offer)
+  expect(applications.length).to eq 0
+end
