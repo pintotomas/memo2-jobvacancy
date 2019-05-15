@@ -16,3 +16,11 @@ Given("I don't fill the experience field") do
   fill_in('job_offer[experience]', with: nil)
   @experience = 'Not specified'
 end
+
+Then('the experience amount validation fails') do
+  pending # Write code here that turns the phrase above into concrete actions
+end
+
+Then('my offer is not created') do
+  page.should have_content(@experience)
+end

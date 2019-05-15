@@ -142,5 +142,14 @@ describe JobOffer do
                                       updated_on: Date.today)
       expect(job_offer.valid?).to eq true
     end
+
+    it 'job offer should not be able to be created with 21 years experience' do
+      job_offer = described_class.new(title: 'a title',
+                                      validity_date: Date.today.next_day.strftime,
+                                      validity_time: '04:05',
+                                      experience: 21,
+                                      updated_on: Date.today)
+      expect(job_offer.valid?).to eq false
+    end
   end
 end
