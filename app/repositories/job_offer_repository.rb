@@ -36,9 +36,9 @@ class JobOfferRepository < BaseRepository
   end
 
   def search(term)
-    load_collection dataset.where(Sequel.like(:title, "%#{term}%"))
-      .or(Sequel.like(:description, "%#{term}%"))
-                           .or(Sequel.like(:location, "%#{term}%"))
+    load_collection dataset.where(Sequel.like(:title, "%#{term}%", case_insensitive: true))
+      .or(Sequel.like(:description, "%#{term}%", case_insensitive: true))
+                           .or(Sequel.like(:location, "%#{term}%", case_insensitive: true))
   end
 
   protected

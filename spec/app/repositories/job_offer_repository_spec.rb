@@ -174,5 +174,12 @@ describe JobOfferRepository do
       expect(offer.description).to eq today_offer.description
       expect(offer.location).to eq today_offer.location
     end
+
+    it 'search should be case insensitive' do
+      offer = repository.search('AMAZING')[0]
+      expect(offer.title).to eq today_offer.title
+      expect(offer.description).to eq today_offer.description
+      expect(offer.location).to eq today_offer.location
+    end
   end
 end
