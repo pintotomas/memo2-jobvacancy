@@ -28,14 +28,13 @@ Feature: Job Offers Experience
     Then the experience amount validation fails
     And my offer is not created
 
-  @wip
   Scenario: Update offer experience
-    Given I have "Programmer vacancy" offer with "1" experience required offer in My Offers
+    Given I have "Programmer vacancy" offer with 1 experience required offer in My Offers
     And I edit it
-    And I set experience to "6"
+    And I set experience to 6
     And I save the modification
     Then the offer should be updated
-    And  the offer’s experience should be "6"
+    And  the offer’s experience should be 6
 
 
 
