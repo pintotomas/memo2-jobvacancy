@@ -4,6 +4,7 @@ class User
   attr_accessor :id, :name, :email, :crypted_password, :job_offers,
                 :updated_on, :created_on, :password
 
+  MAX_PASSORD_CHARACTERS = 8
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z]+)*\.[a-z]+\z/i
   PASSWORD_VALIDATOR = /(      # Start of group
   (?:                        # Start of nonmatching group, 4 possible solutions
@@ -42,8 +43,10 @@ class User
 
   def validate_password
     aplicate_regex = @created_on.nil? && !PASSWORD_VALIDATOR.match?(@password)
-    errors.add(:password, 'invalid format') if aplicate_regex
-    has_eight_characters = @created_on.nil? && !@password.nil? && @password.length == 8
-    errors.add(:password, 'Must have 8 characters') unless has_eight_characters
+    return errors.add(:password, 'invalid format') if aplicate_regex
+
+    has_eight_characters = @created_on.nil? && !@password.nil? &&
+                           @password.length == MAX_PASSORD_CHARACTERS
+    errors.add(:password, 'must have 8 characters') unless has_eight_characters
   end
 end
