@@ -26,7 +26,6 @@ Feature: Strong passwords
     When I confirm the registration
     Then My user should not have been created
 
-  @wip
   Scenario: Password without a number or symbol
     Given I fill with "Invaliid" the password fields
     When I confirm the registration

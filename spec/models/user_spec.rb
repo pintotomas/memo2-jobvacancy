@@ -44,6 +44,12 @@ describe User do
       expect(user.valid?).to eq false
     end
 
+    it 'should be true when password has not  a numbers or simbols' do
+      user = described_class.new(name: 'John Doe', email: 'john@doe.com',
+                                 password: 'Invaliid')
+      expect(user.valid?).to eq false
+    end
+
     it 'should be true when all field are valid' do
       user = described_class.new(name: 'John Doe', email: 'john@doe.com',
                                  password: 'Aa123456', crypted_password: 'a_secure_passWord!')
