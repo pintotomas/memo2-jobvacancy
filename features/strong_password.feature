@@ -21,7 +21,6 @@ Feature: Strong passwords
     When I confirm the registration
     Then My user should have been created
 
-  @wip
   Scenario: Password without an uppercase letter
     Given I fill with "invalid123" the password fields
     When I confirm the registration
