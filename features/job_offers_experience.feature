@@ -10,5 +10,14 @@ Feature: Job Offers Experience
     Given I access the new offer page
     And I fill the title with "Java dev"
     And I fill the experience with 1
-    When I confirm the new offer    
-    Then my offer is created successfully    
+    When I confirm the new offer
+    Then my offer is created successfully
+
+  @wip
+  Scenario: Years of experience field is optional
+    Given I access the new offer page
+    And I fill the title with "Java dev"
+    And I don't fill the experience field
+    When I confirm the new offer
+    Then my offer is created successfull
+
