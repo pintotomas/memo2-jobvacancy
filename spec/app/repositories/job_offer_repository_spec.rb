@@ -162,5 +162,17 @@ describe JobOfferRepository do
       expect(offer.description).to eq today_offer.description
       expect(offer.location).to eq today_offer.location
     end
+
+    it 'should search by entire search term' do
+      offer = repository.search('amazing falafel')
+      expect(offer).to eq []
+    end
+
+    it 'should search by location' do
+      offer = repository.search(today_offer.location)[0]
+      expect(offer.title).to eq today_offer.title
+      expect(offer.description).to eq today_offer.description
+      expect(offer.location).to eq today_offer.location
+    end
   end
 end
