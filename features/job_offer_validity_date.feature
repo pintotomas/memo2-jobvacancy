@@ -37,4 +37,4 @@ Feature: Job Validity Date
     When I try to apply to the offer that will expire
     And I wait two minutes
     And I apply to the offer
-    Then I should see  "Offer expired while you were applying"
+    Then I should see  "expired before you completed your application"

@@ -65,5 +65,6 @@ When('I wait two minutes') do
 end
 When('I apply to the offer') do
   fill_in('job_application[applicant_email]', with: 'applicant@test.com')
+  fill_in('job_application[bio]', with: 'asd')
   click_button('Apply')
 end
