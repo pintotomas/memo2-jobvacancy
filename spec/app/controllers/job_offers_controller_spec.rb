@@ -57,7 +57,7 @@ describe 'JobOffersController' do
       id = repository.search('a title')[0].id
       put '/job_offers/satisfy/' + String(id), job_offer: { offer_id: id }
       put '/job_offers/satisfy/' + String(id), job_offer: { offer_id: id }
-      expect(last_response.location).to eq('http://example.org/home/index')
+      expect(last_response.location).to eq('http://example.org/')
     end
   end
 
@@ -73,7 +73,7 @@ describe 'JobOffersController' do
       id = repository.search('a title')[0].id
       put '/job_offers/unsatisfy/' + String(id), job_offer: { offer_id: id }
       put '/job_offers/unsatisfy/' + String(id), job_offer: { offer_id: id }
-      expect(last_response.location).to eq('http://example.org/home/index')
+      expect(last_response.location).to eq('http://example.org/')
     end
   end
 end

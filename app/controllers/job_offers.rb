@@ -105,8 +105,8 @@ JobVacancy::App.controllers :job_offers do
       @job_offer.satisfy
       flash[:success] = 'Offer satisfied!' if JobOfferRepository.new.save(@job_offer)
     rescue AlreadySatisfiedError, CantSatisfyOldOffer, CantSatisfyExpiredOffer
-      flash.now[:error] = 'Operation failed'
-      redirect 'home/index'
+      flash[:error] = 'Operation failed'
+      redirect '/'
     end
     redirect '/job_offers/my'
   end
@@ -117,8 +117,8 @@ JobVacancy::App.controllers :job_offers do
       @job_offer.unsatisfy
       flash[:success] = 'Offer unsatisfied!' if JobOfferRepository.new.save(@job_offer)
     rescue NotSatisfiedError, CantUnsatisfyExpiredOffer, CantUnsatisfyOldOffer
-      flash.now[:error] = 'Operation failed'
-      redirect 'home/index'
+      flash[:error] = 'Operation failed'
+      redirect '/'
     end
     redirect '/job_offers/my'
   end
