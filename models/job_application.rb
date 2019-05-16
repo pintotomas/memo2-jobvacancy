@@ -9,7 +9,7 @@ class JobApplication
                                                         message: ': invalid format' }
 
   validates :bio, presence: true, length: { minimum: 1, maximum: 500 }, allow_blank: false
-  validate :validate_offer
+  validate :validate_offer_satisfaction
   def initialize(data)
     @job_offer = data[:offer]
     @id = data[:id]
@@ -27,10 +27,11 @@ class JobApplication
 
   protected
 
-  def validate_offer
+  def validate_offer_satisfaction
     return if @job_offer.nil?
+    return unless @job_offer.satisfied?
 
     @not_valid = true
-    errors.add(:offer, 'invalid. It is already satisfied')
+    errors.add(:offer, 'was satisfied before you completed your application')
   end
 end
