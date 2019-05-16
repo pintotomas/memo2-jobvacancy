@@ -75,6 +75,12 @@ describe JobApplication do
       ja = described_class.new(email: 'a@t.com', job_offer_id: of.id, bio: 'a', offer: of)
       expect(ja).to be_valid
     end
+    it 'should be valid when the offer has not expired' do
+      of = JobOffer.new(title: 'a title', satisfied: false,
+                        validity_date: '2019-012-29', validity_time: '04:07')
+      ja = described_class.new(email: 'a@t.com', job_offer_id: of.id, bio: 'a', offer: of)
+      expect(ja).to be_valid
+    end
   end
 
   describe 'process' do

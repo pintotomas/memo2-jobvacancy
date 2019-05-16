@@ -10,6 +10,7 @@ class JobApplication
 
   validates :bio, presence: true, length: { minimum: 1, maximum: 500 }, allow_blank: false
   validate :validate_offer_satisfaction
+  validate :validate_offer_is_old
   def initialize(data)
     @job_offer = data[:offer]
     @id = data[:id]
@@ -26,6 +27,10 @@ class JobApplication
   end
 
   protected
+
+  def validate_offer_is_old
+    @not_valid = false
+  end
 
   def validate_offer_satisfaction
     return if @job_offer.nil?
