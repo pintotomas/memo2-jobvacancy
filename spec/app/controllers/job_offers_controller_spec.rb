@@ -54,7 +54,7 @@ describe 'JobOffersController' do
       expect(repository.search('a title')[0].satisfied?).to eq true
     end
     it 'shouldnt satisfy offer if it was satisfied' do
-      id = repository.search_by_title('a title')[0].id
+      id = repository.search('a title')[0].id
       put '/job_offers/satisfy/' + String(id), job_offer: { offer_id: id }
       put '/job_offers/satisfy/' + String(id), job_offer: { offer_id: id }
       expect(last_response.location).to eq('http://example.org/home/index')
@@ -70,7 +70,7 @@ describe 'JobOffersController' do
       expect(repository.search('a title')[0].satisfied?).to eq false
     end
     it 'shouldnt unsatisfy offer two times' do
-      id = repository.search_by_title('a title')[0].id
+      id = repository.search('a title')[0].id
       put '/job_offers/unsatisfy/' + String(id), job_offer: { offer_id: id }
       put '/job_offers/unsatisfy/' + String(id), job_offer: { offer_id: id }
       expect(last_response.location).to eq('http://example.org/home/index')
