@@ -49,8 +49,8 @@ JobVacancy::App.controllers :job_offers do
       JobApplicationRepository.new.save(@job_application)
       @job_application.process(@job_offer)
       flash[:success] = 'Contact information sent.'
+      redirect 'job_offers/latest'
     else
-      @job_offer = JobOfferRepository.new.find(params[:offer_id])
       flash[:error] = @job_application.errors.full_messages[0]
       if @job_application.errors.details.key? :offer
         redirect 'job_offers/latest'
@@ -58,7 +58,6 @@ JobVacancy::App.controllers :job_offers do
         redirect 'job_offers/apply/' + String(@job_offer.id)
       end
     end
-    redirect 'job_offers/latest' if @job_application.valid?
   end
 
   post :create do
