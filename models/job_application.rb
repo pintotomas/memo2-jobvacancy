@@ -29,7 +29,11 @@ class JobApplication
   protected
 
   def validate_offer_is_old
-    @not_valid = false
+    return if @job_offer.nil?
+    return unless @job_offer.expired_offer? || @job_offer.old_offer?
+
+    @not_valid = true
+    errors.add(:offer, 'expired before you completed your application')
   end
 
   def validate_offer_satisfaction
