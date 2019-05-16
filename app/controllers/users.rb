@@ -15,7 +15,7 @@ JobVacancy::App.controllers :users do
         flash[:success] = 'User created'
         redirect '/'
       else
-        flash.now[:error] = 'All fields are mandatory'
+        flash.now[:error] = @user.errors.full_messages.join(', ')
         render 'users/new'
       end
     else

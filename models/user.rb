@@ -1,22 +1,34 @@
 class User
   include ActiveModel::Validations
 
-  attr_accessor :id, :name, :email, :crypted_password, :job_offers, :updated_on, :created_on
+  attr_accessor :id, :name, :email, :crypted_password, :job_offers,
+                :updated_on, :created_on, :password
 
+  MAX_PASSORD_CHARACTERS = 8
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z]+)*\.[a-z]+\z/i
+  PASSWORD_VALIDATOR = /(      # Start of group
+  (?:                        # Start of nonmatching group, 4 possible solutions
+    (?=.*[a-z])              # Must contain one lowercase character
+    (?=.*[A-Z])              # Must contain one upercase character
+    ((?=.*\d)|(?=.*\W+))     # Must contain one number or not word
+  )                          # End of nonmatching group with possible solutions
+  .*                         # Match anything with previous condition checking
+)/x # End of group
 
-  validates :name, :crypted_password, presence: true
+  validates :name, :crypted_password, :password, presence: true
   validates :email, presence: true, format: { with: VALID_EMAIL_REGEX,
                                               message: 'invalid email' }
+  validate :validate_password
 
   def initialize(data = {})
     @id = data[:id]
     @name = data[:name]
     @email = data[:email]
-    @crypted_password = if data[:password].nil?
+    @password = data[:password]
+    @crypted_password = if @password.nil?
                           data[:crypted_password]
                         else
-                          Crypto.encrypt(data[:password])
+                          Crypto.encrypt(@password)
                         end
     @job_offers = data[:job_offers]
     @updated_on = data[:updated_on]
@@ -25,5 +37,16 @@ class User
 
   def has_password?(password)
     Crypto.decrypt(crypted_password) == password
+  end
+
+  private
+
+  def validate_password
+    aplicate_regex = @created_on.nil? && !PASSWORD_VALIDATOR.match?(@password)
+    return errors.add(:password, 'invalid format') if aplicate_regex
+
+    has_eight_characters = @created_on.nil? && !@password.nil? &&
+                           @password.length == MAX_PASSORD_CHARACTERS
+    errors.add(:password, 'must have 8 characters') unless has_eight_characters
   end
 end

@@ -2,7 +2,7 @@ require 'integration_spec_helper'
 
 describe 'JobOffersController' do
   let(:current_user) do
-    user = User.new(name: 'Joe', email: 'joe@doe.com', crypted_password: 'secure_pwd')
+    user = User.new(name: 'Joe', email: 'joe@doe.com', password: 'Aa123456')
     UserRepository.new.save(user)
     user
   end
@@ -53,6 +53,12 @@ describe 'JobOffersController' do
       expect(last_response.location).to eq('http://example.org/job_offers/my')
       expect(repository.search('a title')[0].satisfied?).to eq true
     end
+    it 'shouldnt satisfy offer if it was satisfied' do
+      id = repository.search_by_title('a title')[0].id
+      put '/job_offers/satisfy/' + String(id), job_offer: { offer_id: id }
+      put '/job_offers/satisfy/' + String(id), job_offer: { offer_id: id }
+      expect(last_response.location).to eq('http://example.org/home/index')
+    end
   end
 
   describe 'put :sunatisfy' do
@@ -62,6 +68,12 @@ describe 'JobOffersController' do
       put '/job_offers/unsatisfy/' + String(id), job_offer: { offer_id: id }
       expect(last_response.location).to eq('http://example.org/job_offers/my')
       expect(repository.search('a title')[0].satisfied?).to eq false
+    end
+    it 'shouldnt unsatisfy offer two times' do
+      id = repository.search_by_title('a title')[0].id
+      put '/job_offers/unsatisfy/' + String(id), job_offer: { offer_id: id }
+      put '/job_offers/unsatisfy/' + String(id), job_offer: { offer_id: id }
+      expect(last_response.location).to eq('http://example.org/home/index')
     end
   end
 end

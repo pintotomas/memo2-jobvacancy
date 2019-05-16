@@ -6,6 +6,7 @@
 		<th>Description</th>
 		<th>Postulations</th>
 		<th>Is active</th>
+		<th>Experience</th>
 		<th>Actions</th>
 	</tr>
 	<% @offers.each do | offer| %>
@@ -25,7 +26,15 @@
 		</td>		
 		<td>
 			<%= offer.is_active %>
-		</td>		
+		</td>
+		<td>
+			<% if offer.experience.blank? %>
+				Not specified
+			<% else %>
+				<%= offer.experience %>
+			<% end %>
+		</td>
+
 
 		<td>
 			<%= link_to 'Edit', url_for(:job_offers, :edit, :offer_id => offer.id), :class => "btn btn-primary" %>

@@ -1,7 +1,7 @@
 Given(/^I have created "(.*?)" job offer only$/) do |job_title|
   visit '/login'
   fill_in('user[email]', with: 'offerer@test.com')
-  fill_in('user[password]', with: 'Passw0rd!')
+  fill_in('user[password]', with: 'Aa123456')
   click_button('Login')
   page.should have_content('offerer@test.com')
   @job_offer = JobOffer.new

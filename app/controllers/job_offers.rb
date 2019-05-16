@@ -43,7 +43,10 @@ JobVacancy::App.controllers :job_offers do
     @job_offer = JobOfferRepository.new.find(params[:offer_id])
     if @job_offer.expired_offer? || @job_offer.old_offer?
       flash[:error] = 'Offer expired while you were applying'
-      redirect '/job_offers'
+      redirect '/job_offers/latest'
+    elsif @job_offer.satisfied?
+      flash[:error] = 'Offer was satisfied before you completed your application'
+      redirect '/job_offers/latest'
     else
       applicant_email = params[:job_application][:applicant_email]
       bio = params[:job_application][:bio]
@@ -84,7 +87,7 @@ JobVacancy::App.controllers :job_offers do
       flash[:success] = 'Offer updated'
       redirect '/job_offers/my'
     else
-      flash.now[:error] = 'Title is mandatory'
+      flash.now[:error] = @job_offer.errors.full_messages.join(', ')
       render 'job_offers/edit'
     end
   end
@@ -102,26 +105,26 @@ JobVacancy::App.controllers :job_offers do
   end
 
   put :satisfy, with: :offer_id do
-    @job_offer = JobOfferRepository.new.find(params[:offer_id])
-    @job_offer.satisfy
-    if JobOfferRepository.new.save(@job_offer)
-      flash[:success] = 'Offer satisfied!'
-    else
+    begin
+      @job_offer = JobOfferRepository.new.find(params[:offer_id])
+      @job_offer.satisfy
+      flash[:success] = 'Offer satisfied!' if JobOfferRepository.new.save(@job_offer)
+    rescue AlreadySatisfiedError, CantSatisfyOldOffer, CantSatisfyExpiredOffer
       flash.now[:error] = 'Operation failed'
+      redirect 'home/index'
     end
-
     redirect '/job_offers/my'
   end
 
   put :unsatisfy, with: :offer_id do
-    @job_offer = JobOfferRepository.new.find(params[:offer_id])
-    @job_offer.unsatisfy
-    if JobOfferRepository.new.save(@job_offer)
-      flash[:success] = 'Offer unsatisfied!'
-    else
+    begin
+      @job_offer = JobOfferRepository.new.find(params[:offer_id])
+      @job_offer.unsatisfy
+      flash[:success] = 'Offer unsatisfied!' if JobOfferRepository.new.save(@job_offer)
+    rescue NotSatisfiedError, CantUnsatisfyExpiredOffer, CantUnsatisfyOldOffer
       flash.now[:error] = 'Operation failed'
+      redirect 'home/index'
     end
-
     redirect '/job_offers/my'
   end
 
