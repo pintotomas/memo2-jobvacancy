@@ -29,9 +29,8 @@ class JobApplication
 
   def validate_offer
     return if @job_offer.nil?
-    return unless @job_offer.satisfied?
 
     @not_valid = true
-    errors.add(:offer, 'was satisfied before you completed your application')
+    errors.add(:offer, 'invalid. It is already satisfied')
   end
 end
